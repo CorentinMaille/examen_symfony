@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/cart/content')]
+#[Route('{_locale}/cart/content')]
 class CartContentController extends AbstractController
 {
     #[Route('/', name: 'app_cart_content_index', methods: ['GET'])]
@@ -73,6 +73,6 @@ class CartContentController extends AbstractController
             $cartContentRepository->remove($cartContent, true);
         }
 
-        return $this->redirectToRoute('app_cart_content_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_cart_index_user', [], Response::HTTP_SEE_OTHER);
     }
 }

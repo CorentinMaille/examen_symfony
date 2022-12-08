@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+    <h1>Panier de {{ user_full_name }}</h1>
+    
+    {% set montant_total = 0 %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix Unitaire</th>
+                <th>Prix ligne</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cart in carts %}
+            <tr>
+                <td>{{ cart.id }}</td>
+                <td>{{ cart.name }}</td>
+                <td>{{ cart.quantity }}</td>
+                <td>{{ cart.price }} €</td>
+                <td>{{ cart.quantity * cart.price }} €</td>
+                <td>
+                    {{ include('cart/_delete_form.html.twig') }}
+                </td>
+            </tr>
+            {% set montant_total = montant_total + (cart.quantity * cart.price) %}
+        {% else %}
+            <tr>
+                <td colspan="4">Vous n'avez pas encore de produit dans votre panier</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if carts is not empty %}
+        <div class="card">
+            <div class="card-body">
+                Montant total de votre panier : {{ montant_total }} €
+            </div>
+            <div class="card-footer">
+                <form method="POST" action="{{ path('app_cart_show', {'id': cart_id}) }}">
+                    <button class="btn btn-success">Valider et Payer</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
