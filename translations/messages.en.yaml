@@ -3,10 +3,6 @@ navbar:
   register: Inscription
   connection: Connection
   logout : Logout
-  category:
-    title: Catégory
-    show_all: Show all
-    last: The last Three one
 
 # ASSERT
 assert:
