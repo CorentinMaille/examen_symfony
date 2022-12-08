@@ -1,0 +1,24 @@
+# NAVBAR
+navbar:
+  register: Inscription
+  connection: Connection
+  logout : Logout
+  category:
+    title: Catégory
+    show_all: Show all
+    last: The last Three one
+
+# ASSERT
+assert:
+  not_blank_message: Le champ ne peut pas être vide
+  length-min_message: The field must be at least {{ limit }} characters
+  length-max_message: The field must be a maximum of {{ limit }} characters
+  positive_message: The field must be greater than zero
+  positive_or_null_message: The field must be greater than or equal to zero
+  range_message: Your value must be between {{ min }} and {{ max }}
+
+#FLASH
+flash:
+  success: success
+  warning: warning
+  danger: danger
