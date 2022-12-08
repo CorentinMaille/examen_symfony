@@ -45,13 +45,13 @@
 
         {% for type, messages in app.flashes %}
             {% for msg in messages %}
-            <div class="alert alert-{{ type }}">
+            <div class="alert alert-{{ type }} w-50 mx-auto">
                 {{ msg }}
             </div>
             {% endfor %}
         {% endfor %}
 
-        <main class="container">
+        <main class="container text-center" style="border: red solid 2px">
             {% block body %}{% endblock %}
         </main>
 
