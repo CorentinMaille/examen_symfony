@@ -43,6 +43,11 @@ class Product
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

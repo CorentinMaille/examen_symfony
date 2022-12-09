@@ -19,7 +19,7 @@
         </ul>
         <div class="card-body">
             {% if is_granted('ROLE_USER') %}
-            <a href="{{ path('app_cart_content_new') }}" class="text-center mt-3 btn btn-success w-25">Add to cart</a>
+                {{ form(addToCartForm) }}
             {% endif %}
 
             {% if is_granted('ROLE_ADMIN') %}
