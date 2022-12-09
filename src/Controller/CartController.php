@@ -29,7 +29,7 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/super_admin', name: 'app_cart_index_super_admin', methods: ['GET'])]
+    #[Route('/super_admin', name: 'app_cart_super_admin', methods: ['GET'])]
     public function super_admin_view(CartRepository $cartRepository): Response
     {
         $user = $this->getUser();

@@ -61,7 +61,8 @@ class CartRepository extends ServiceEntityRepository
         INNER JOIN cart_content ON cart.id = cart_content.cart_id 
         INNER JOIN product ON cart_content.product_id = product.id
         INNER JOIN user ON cart.user_id = user.id
-        WHERE cart.status = false";
+        WHERE cart.status = false
+        ORDER BY user_id";
         $conn = $this->getEntityManager()->getConnection();
         $preparedQuery = $conn->prepare($query);
         $results = $preparedQuery->executeQuery([]);

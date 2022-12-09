@@ -19,6 +19,16 @@
             </a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Utilisateurs
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{{ path('app_user_index')}}">SUPER ADMIN - Inscription du jour</a>
+                            </div>
+                        </li>
+                    {% endif %}
 
                     {% if is_granted('ROLE_USER') %}
 
@@ -28,6 +38,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="{{ path('app_cart_index_user')}}">Voir son panier</a>
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    <a class="dropdown-item" href="{{ path('app_cart_super_admin')}}">SUPER ADMIN - Paniers en cours</a>
+                                {% endif %}
                             </div>
                         </li>
 

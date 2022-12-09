@@ -23,7 +23,7 @@
             {% set current_user = cart.user_id %}
             <div class="card mt-3">
                 <div class="card-body">
-                    <b>Panier de l'utilisateur : {{ cart.firstname }} {{ cart.lastname }}</b>
+                    <b>Panier N°{{ cart.cart_id }} de l'utilisateur : {{ cart.firstname }} {{ cart.lastname }}</b>
                 </div>
             </div>
 
@@ -52,7 +52,7 @@
 
     {% else %}
         <tr>
-            <td colspan="4">Vous n'avez pas encore de produit dans votre panier</td>
+            <td colspan="3">Aucun utilisateur n'a de panier en cours</td>
         </tr>
     {% endfor %}
 
