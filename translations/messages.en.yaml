@@ -22,6 +22,8 @@ cart_content_controller:
 subtitle:
   product_sheet: Product sheet
   edition: Edition
+  order_history: Orders history
+  account: My Account
 
 # NAVBAR
 title: E-Commerce
@@ -88,6 +90,22 @@ table:
   description: Description
   stock: Stock
   picture: Picture
+  date: Date
+  amount: Amount
+  options: Options
+
+# ACCOUNT
+account:
+  no_order_place: You have not placed any orders
+  flash_message:
+    edited: 'Your account has been edited'
+
+# USER
+user:
+  firstname: Firstname
+  lastname: Lastname
+  email: Email
+  password: Password
 
 #FORM
 label:
