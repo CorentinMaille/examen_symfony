@@ -22,6 +22,8 @@ cart_content_controller:
 subtitle:
   product_sheet: Fiche produit
   edition: Edition
+  order_history: Historique des commandes
+  account: Mon compte
 
 # NAVBAR
 title: E-Commerce
@@ -77,6 +79,19 @@ cart:
     order_date: "Date de la commande N°%0% : %1%"
     no_result: Un problème est survenu
 
+# ACCOUNT
+account:
+  no_order_place: Vous n'avez passé aucune commande
+  flash_message:
+    edited: 'Votre compte à bien été édité'
+
+# USER
+user:
+  firstname: Prénom
+  lastname: Nom de famille
+  email: E-mail
+  password: Mot de passe
+
 #FORM
 label:
   quantity: Quantité
@@ -97,6 +112,9 @@ table:
   description: Description
   stock: Stock
   picture: Photo
+  date: Date
+  amount: Montant
+  options: Options
 
 #HOME
 home:
