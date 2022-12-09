@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_product_delete', {'id': product.id}) }}" onsubmit="return confirm({{ 'product_controller.confirm_deletion'|trans }});">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+    <button class="btn btn-danger w-50">{{ 'button.delete'|trans }}</button>
+</form>
