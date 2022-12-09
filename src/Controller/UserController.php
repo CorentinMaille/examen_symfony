@@ -33,11 +33,7 @@ class UserController extends AbstractController
      * @return Response
      */
     #[Route('/', name: 'app_user_account', methods: ['GET', 'POST'])]
-    public function account(UserRepository $userRepository,
-                          CartRepository $cartRepository,
-                          Request $request,
-                          UserPasswordHasherInterface $userPasswordHasher)
-    : Response {
+    public function account(UserRepository $userRepository, CartRepository $cartRepository, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response {
         $user = $this->getUser();
         if (is_null($user)) {
             return $this->redirectToRoute('app_login');
