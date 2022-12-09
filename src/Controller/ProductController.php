@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cart;
 use App\Entity\CartContent;
 use App\Entity\Product;
+use App\Form\CartContentType;
 use App\Form\ProductType;
 use App\Repository\CartContentRepository;
 use App\Repository\CartRepository;
