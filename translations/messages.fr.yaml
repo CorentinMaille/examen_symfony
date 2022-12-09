@@ -12,6 +12,7 @@ home_controller:
       stock_below_quantity: La quantité demandée est supérieure au stock disponible pour ce produit
       added: Le produit a bien été ajouté à votre panier
       deleted: Le produit a été supprimé
+    confirm_deletion: 'Êtes-vous sûr de vouloir supprimer ce produit ?'
 
 # CART CONTENT CONTROLLER
 cart_content_controller:

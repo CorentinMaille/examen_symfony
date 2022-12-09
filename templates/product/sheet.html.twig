@@ -31,7 +31,8 @@
                         <h3 class="mb-3 mt-2">{{ 'subtitle.edition'|trans }}</h3>
                         <hr>
                         {{ form(productEditForm) }}
-                        <a class="btn btn-danger mt-3 mx-auto w-50" style="width: 33%" href="{{ path('app_product_delete', {'id': product.id}) }}">{{ 'button.delete'|trans }}</a>
+                        {{ include('product/_delete_form.html.twig') }}
+                        <!-- <a class="btn btn-danger mt-3 mx-auto w-50" style="width: 33%" href="{{ path('app_product_delete', {'id': product.id}) }}">{{ 'button.delete'|trans }}</a> -->
                     </div>
                 {% endif %}
             </div>

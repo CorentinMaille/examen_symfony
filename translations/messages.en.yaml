@@ -12,6 +12,7 @@ product_controller:
     stock_below_quantity: The quantity requested is greater than the stock available for this product
     added: The product has been added to your cart
     deleted: The product has been deleted
+  confirm_deletion: 'Are you sure you want to delete this product?'
 
 # CART CONTENT CONTROLLER
 cart_content_controller:
