@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My account{% endblock %}
+
+{% block body %}
+    <h1>My Profile</h1>
+
+    <div class="mt-3 mx-auto w-75 row p-4 border bg-light" style="border-radius: 15px">
+        <div class="col-4 d-flex align-items-center">
+            <img class="img-thumbnail" src="{{ asset('profile_picture.png') }}">
+        </div>
+        <div class="col-8 ps-3">
+            {{ form_start(editAccountForm) }}
+                {{ form_row(editAccountForm.firstname) }}
+                {{ form_row(editAccountForm.lastname) }}
+                {{ form_row(editAccountForm.email) }}
+                {{ form_row(editAccountForm.password) }}
+                {{ form_widget(editAccountForm.submit, {'label': 'Edit'}) }}
+            {{ form_end(editAccountForm) }}
+        </div>
+    </div>
+
+    <h1 class="mt-5">Hitorique des commandes</h1>
+
+    <div class="mt-3 mx-auto w-75 row p-4 border bg-light" style="border-radius: 15px">
+        {% if orders is not empty %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+                </thead>
+                {% for order in orders %}
+                    <tbody>
+                    <tr>
+                        <td>n° {{ order.id }}</td>
+                        <td>passée le {{ order.purchaseDate }}</td>
+                        <td>montant total : {{ order.totalPrice }}</td>
+                        <td>@mdo</td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h3>Vous n'avez passé aucune commande</h3>
+        {% endif %}
+    </div>
+{% endblock %}

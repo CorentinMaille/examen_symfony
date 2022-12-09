@@ -3,6 +3,7 @@ navbar:
   register: Inscription
   connection: Connection
   logout : Logout
+  account: My account
 
 # ASSERT
 assert:
