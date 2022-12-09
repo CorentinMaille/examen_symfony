@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('{_locale}/cart/content')]
 class CartContentController extends AbstractController
@@ -22,7 +23,7 @@ class CartContentController extends AbstractController
     }
 
     #[Route('/new', name: 'app_cart_content_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CartContentRepository $cartContentRepository): Response
+    public function new(Request $request, CartContentRepository $cartContentRepository, TranslatorInterface $translator): Response
     {
         $cartContent = new CartContent();
         $form = $this->createForm(CartContentType::class, $cartContent);
@@ -30,8 +31,7 @@ class CartContentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid() && $this->isGranted('ROLE_USER')) {
             $cartContentRepository->save($cartContent, true);
-            $this->addFlash('success', 'The product has been added to your cart');
-
+            $this->addFlash($translator->trans('flash.success'), $translator->trans('cart_content_controller.flash_message.added'));
             return $this->redirectToRoute('app_cart_content_index', [], Response::HTTP_SEE_OTHER);
         }
 

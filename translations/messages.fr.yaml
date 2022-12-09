@@ -1,3 +1,14 @@
+# HOME CONTROLLER
+home_controller:
+  flash_message:
+    image_issue: Une erreur s'est produite avec l'image du produit donné
+    created: Le produit a été créé
+
+# CART CONTENT CONTROLLER
+cart_content_controller:
+  flash_message:
+    added: Le produit a bien été ajouté à votre panier
+
 # NAVBAR
 title: E-Commerce
 navbar:
