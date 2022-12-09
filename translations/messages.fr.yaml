@@ -1,8 +1,14 @@
 # NAVBAR
+title: E-Commerce
 navbar:
   register: Inscription
   connection: Connexion
   logout : Déconnexion
+  cart: Panier
+  view_cart: Voir panier
+  users_cart_active: SUPER ADMIN - Panier actifs utilisateurs
+  users: Utilisateurs
+  users_day_registered: Utilisateurs inscrit du jour
 
 # ASSERT
 assert:
@@ -18,3 +24,56 @@ flash:
   success: success
   warning: warning
   danger: danger
+
+#BUTTON
+button:
+  delete: Supprimer
+  view: Voir
+  edit: Modifier
+
+#CART
+cart:
+  title: Panier
+  subtitle: Panier de %0%
+  no_result: Vous n'avez pas encore de produit dans votre panier
+  total_amont: "Montant total de votre panier : %0% €"
+  button:
+    validate: Valider et Payer
+  super_admin:
+    subtitle: Paniers non validés actuellement en cours
+    cart_for: "Panier N°%0% de l'utilisateur : %1% %2%"
+    no_result: Aucun utilisateur n'a de panier en cours
+  one_cart_view:
+    subtitle: Détails de la commande
+    order_date: "Date de la commande N°%0% : %1%"
+    no_result: Un problème est survenu
+
+#TABLE
+table:
+  id: Id
+  product: Produit
+  quantity: Quantité
+  unit_price: Prix unitaire
+  row_price: Prix de la ligne
+  actions: Actions
+  description: Description
+  stock: Stock
+  picture: Photo
+
+#HOME
+home:
+  title: Accueil
+  subtitle: Création de produit
+  products: Produits
+  stock: "Stock : %0%"
+  price: "Prix : %0%"
+  description: "Description : %0%"
+  no_result: Il n'existe aucun produit
+
+#PRODUCT
+product:
+  title: Produit
+  subtitle: Liste des produits
+  no_result: Pas de résultat
+  button:
+    create: Créer un nouveau produit

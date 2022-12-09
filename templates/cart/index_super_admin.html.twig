@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Paniers{% endblock %}
+{% block title %}{{ 'cart.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Paniers non validés actuellement en cours</h1>
+    <h1>{{ 'cart.super_admin.subtitle'|trans }}</h1>
 {% set current_user = 0 %}
 
     {% set montant_total = 0 %}
@@ -23,16 +23,16 @@
             {% set current_user = cart.user_id %}
             <div class="card mt-3">
                 <div class="card-body">
-                    <b>Panier N°{{ cart.cart_id }} de l'utilisateur : {{ cart.firstname }} {{ cart.lastname }}</b>
+                    <b>{{ 'cart.super_admin.cart_for'|trans({ '%0%' :  cart.cart_id, '%1%' : cart.firstname, '%2%' : cart.lastname }) }}</b>
                 </div>
             </div>
 
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Produit</th>
-                        <th>Quantité</th>
-                        <th>Prix</th>
+                        <th>{{ 'table.product'|trans }}</th>
+                        <th>{{ 'table.quantity'|trans }}</th>
+                        <th>{{ 'table.row_price'|trans }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,7 +52,7 @@
 
     {% else %}
         <tr>
-            <td colspan="3">Aucun utilisateur n'a de panier en cours</td>
+            <td colspan="3">{{ 'cart.super_admin.no_result'|trans }}</td>
         </tr>
     {% endfor %}
 

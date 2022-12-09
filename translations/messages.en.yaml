@@ -1,8 +1,14 @@
 # NAVBAR
+title: E-Commerce
 navbar:
   register: Inscription
   connection: Connection
   logout : Logout
+  cart : Cart
+  view_cart: View cart
+  users_cart_active: SUPER ADMIN - Users active cart
+  users: Users
+  users_day_registered: registered user of the day
 
 # ASSERT
 assert:
@@ -18,3 +24,48 @@ flash:
   success: success
   warning: warning
   danger: danger
+
+#BUTTON
+button:
+  delete: Delete
+  view: View
+  edit: Edit
+
+#CART
+cart:
+  title: Cart
+  subtitle: "%0%'s Cart"
+  no_result: You don't have any product in your cart yet
+  total_amont: "Total amount of your cart : : %0% €"
+  button:
+    validate: Validate and Pay
+  super_admin:
+    subtitle: Carts not validated currently in progress
+    cart_for: "User's cart N°%0% : %1% %2%"
+    no_result: No user has a current cart
+  one_cart_view:
+    subtitle: Details of the order
+    order_date: "Date of the order N°%0% : %1%"
+    no_result: A problem has occurred
+
+#TABLE
+table:
+  id: Id
+  product: Product
+  quantity: Quantity
+  unit_price: Unit price
+  row_price: Row price
+  actions: Actions
+  description: Description
+  stock: Stock
+  picture: Picture
+
+#HOME
+home:
+  title: Home
+  subtitle: Product creation
+  products: Products
+  stock: "Stock : %0%"
+  price: "Price : %0%"
+  description: "Description : %0%"
+  no_result: There are no products

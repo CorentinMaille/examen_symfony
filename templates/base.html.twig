@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{{ 'title'|trans }}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
         <script src="https://kit.fontawesome.com/4cdad7a7dc.js" crossorigin="anonymous"></script>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -15,17 +16,17 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{{ path('app_home') }}">
-                E-COMMERCE
+                {{ 'title'|trans }}
             </a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Utilisateurs
+                            {{ 'navbar.users'|trans }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ path('app_user_index')}}">SUPER ADMIN - Inscription du jour</a>
+                                <a class="dropdown-item" href="{{ path('app_user_index')}}">{{ 'navbar.users_day_registered'|trans }}</a>
                             </div>
                         </li>
                     {% endif %}
@@ -34,12 +35,12 @@
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Panier
+                            {{ 'navbar.cart'|trans }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ path('app_cart_index_user')}}">Voir son panier</a>
+                                <a class="dropdown-item" href="{{ path('app_cart_index_user')}}">{{ 'navbar.view_cart'|trans }}</a>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                    <a class="dropdown-item" href="{{ path('app_cart_super_admin')}}">SUPER ADMIN - Paniers en cours</a>
+                                    <a class="dropdown-item" href="{{ path('app_cart_super_admin')}}">{{ 'navbar.users_cart_active'|trans }}</a>
                                 {% endif %}
                             </div>
                         </li>
@@ -54,6 +55,11 @@
                     {% endif %}
                 </div>
             </div>
+            <div class="icon-container">
+                <img id="fr" class="icon" src="{{ asset('flag/france-icon.png') }}" class="rounded" style="height:30px;">
+                <img id="en" class="icon me-3" src="{{ asset('flag/anglais-icon.png') }}" class="rounded" style="height:30px;">
+            </div>
+            
         </nav>
 
         {% for type, messages in app.flashes %}
@@ -73,6 +79,22 @@
             <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
             {{ encore_entry_script_tags('app') }}
+            <script>
+                document.getElementById('fr').addEventListener('click', () => {
+                    let url = window.location.href;
+                    var paths = url.split('/');
+                    if(paths[3] != "fr")
+                        paths[3] = "fr"
+                    window.location.replace(paths.join("/"));
+                })
+                document.getElementById('en').addEventListener('click', () => {
+                    let url = window.location.href;
+                    var paths = url.split('/');
+                    if(paths[3] != "en")
+                        paths[3] = "en"
+                    window.location.replace(paths.join("/"));
+                })
+            </script>
         {% endblock %}
     </body>
 </html>

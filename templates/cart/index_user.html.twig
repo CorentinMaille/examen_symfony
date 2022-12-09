@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier{% endblock %}
+{% block title %}{{ 'cart.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Panier de {{ user_full_name }}</h1>
+    <h1>{{ 'cart.subtitle'|trans({ '%0%' : user_full_name }) }}</h1>
     
     {% set montant_total = 0 %}
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Produit</th>
-                <th>Quantité</th>
-                <th>Prix Unitaire</th>
-                <th>Prix ligne</th>
-                <th>Actions</th>
+                <th>{{ 'table.id'|trans }}</th>
+                <th>{{ 'table.product'|trans }}</th>
+                <th>{{ 'table.quantity'|trans }}</th>
+                <th>{{ 'table.unit_price'|trans }}</th>
+                <th>{{ 'table.row_price'|trans }}</th>
+                <th>{{ 'table.actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
             {% set montant_total = montant_total + (cart.quantity * cart.price) %}
         {% else %}
             <tr>
-                <td colspan="6">Vous n'avez pas encore de produit dans votre panier</td>
+                <td colspan="6">{{ 'cart.no_result'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -42,11 +42,11 @@
     {% if carts is not empty %}
         <div class="card">
             <div class="card-body">
-                Montant total de votre panier : {{ montant_total }} €
+                {{ 'cart.total_amont'|trans({ '%0%' : montant_total }) }}
             </div>
             <div class="card-footer">
                 <form method="POST" action="{{ path('app_cart_show', {'id': cart_id}) }}">
-                    <button class="btn btn-success">Valider et Payer</button>
+                    <button class="btn btn-success">{{ 'cart.button.validate'|trans }}</button>
                 </form>
             </div>
         </div>
