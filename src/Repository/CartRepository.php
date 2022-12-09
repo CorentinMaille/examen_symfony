@@ -39,7 +39,10 @@ class CartRepository extends ServiceEntityRepository
         }
     }
 
-    public function getActiveCart($userId){
+    /**
+     * Permet de récupérer le panier "en cours" de l'utilisateur connecté
+     */
+    public function getCurrentUserActiveCart($userId){
         $query = "SELECT cart.id as cart_id, cart_content.*, product.* FROM cart 
         INNER JOIN cart_content ON cart.id = cart_content.cart_id 
         INNER JOIN product ON cart_content.product_id = product.id
@@ -47,6 +50,22 @@ class CartRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
         $preparedQuery = $conn->prepare($query);
         $results = $preparedQuery->executeQuery([$userId]);
+        return $results->fetchAllAssociative();
+    }
+
+    /**
+     * Permet de récupérer tous les paniers "en cours" des uutilisateurs du site E-Commerce
+     */
+    public function getAllActiveCart(){
+        $query = "SELECT user.lastname, user.firstname, user.id as user_id, cart_content.*, product.* FROM cart 
+        INNER JOIN cart_content ON cart.id = cart_content.cart_id 
+        INNER JOIN product ON cart_content.product_id = product.id
+        INNER JOIN user ON cart.user_id = user.id
+        WHERE cart.status = false
+        ORDER BY user_id";
+        $conn = $this->getEntityManager()->getConnection();
+        $preparedQuery = $conn->prepare($query);
+        $results = $preparedQuery->executeQuery([]);
         return $results->fetchAllAssociative();
     }
 

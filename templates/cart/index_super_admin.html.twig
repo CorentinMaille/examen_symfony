@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paniers{% endblock %}
+
+{% block body %}
+    <h1>Paniers non validés actuellement en cours</h1>
+{% set current_user = 0 %}
+
+    {% set montant_total = 0 %}
+    {% set i = 1 %}
+
+    {% for cart in carts %}
+
+        {% if cart.user_id != current_user and montant_total != 0 %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% if cart.user_id != current_user %}
+
+            {% set montant_total = montant_total + (cart.quantity * cart.price) %}
+
+            {% set current_user = cart.user_id %}
+            <div class="card mt-3">
+                <div class="card-body">
+                    <b>Panier N°{{ cart.cart_id }} de l'utilisateur : {{ cart.firstname }} {{ cart.lastname }}</b>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+            <tr>
+                <td>{{ cart.name }}</td>
+                <td>{{ cart.quantity }}</td>
+                <td>{{ cart.quantity * cart.price }} €</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>{{ cart.name }}</td>
+                <td>{{ cart.quantity }}</td>
+                <td>{{ cart.quantity * cart.price }} €</td>
+            </tr>
+        {% endif %}
+        {% set i = i + 1 %}
+
+    {% else %}
+        <tr>
+            <td colspan="3">Aucun utilisateur n'a de panier en cours</td>
+        </tr>
+    {% endfor %}
+
+{% endblock %}

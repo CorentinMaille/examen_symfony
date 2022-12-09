@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -40,8 +41,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class, orphanRemoval: true)]
     private Collection $carts;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $register_date = null;
+
     public function __construct()
     {
+        $this->setRegisterDate(new \DateTime());
         $this->carts = new ArrayCollection();
     }
 
@@ -87,6 +92,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    public function getRole($array = null): string
+    {
+        $roles = is_null($array) ? $this->roles : $array;
+        if (in_array('ROLE_SUPER_ADMIN', $roles)) {
+            return 'ROLE_SUPER_ADMIN';
+        }
+        if (in_array('ROLE_ADMIN', $roles)) {
+            return 'ROLE_ADMIN';
+        }
+        return 'ROLE_USER';
     }
 
     public function setRoles(array $roles): self
@@ -170,6 +187,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $cart->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRegisterDate(): ?\DateTimeInterface
+    {
+        return $this->register_date;
+    }
+
+    public function setRegisterDate(\DateTimeInterface $register_date): self
+    {
+        $this->register_date = $register_date;
 
         return $this;
     }

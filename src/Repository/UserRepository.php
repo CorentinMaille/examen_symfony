@@ -8,6 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -40,6 +41,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getRegisterUsersOnThisDay(){
+        $query = "SELECT * FROM user WHERE CAST(user.register_date AS DATE) = CURRENT_DATE ORDER BY user.register_date DESC";
+        $conn = $this->getEntityManager()->getConnection();
+        $preparedQuery = $conn->prepare($query);
+        $results = $preparedQuery->executeQuery([]);
+        $datas = $results->fetchAllAssociative();
+        $user = new User();
+        // Le Count($datas) n'est pas reconnue mais est fonctionnel
+        for($i = 0; $i < Count($datas); $i++){
+            $datas[$i]['roles'] = $user->getRole(json_decode($datas[$i]['roles']));
+        }
+        return $datas;
     }
 
     /**

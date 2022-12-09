@@ -13,7 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route(['/', 'home'], name: 'app_home')]
+    #[Route(['/'], name: 'redirectLanguage')]
+    public function redirectLanguage(ProductRepository $productRepository, Request $request): Response {
+        return $this->redirectToRoute('app_home');
+    }
+
+    #[Route(['{_locale}/home'], name: 'app_home')]
     public function index(ProductRepository $productRepository, Request $request): Response
     {
         $product = new Product();

@@ -7,6 +7,7 @@ use App\Form\CartType;
 use App\Repository\CartRepository;
 use DateTime;
 use Doctrine\ORM\Mapping\Id;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class CartController extends AbstractController
     public function index(CartRepository $cartRepository): Response
     {
         $user = $this->getUser();
-        $carts = $cartRepository->getActiveCart($user->getId());
+        $carts = $cartRepository->getCurrentUserActiveCart($user->getId());
         return $this->render('cart/index_user.html.twig', [
             'carts' => $carts,
             'user_full_name' => $user,
@@ -28,32 +29,49 @@ class CartController extends AbstractController
         ]);
     }
 
-    // #[Route('/new', name: 'app_cart_new', methods: ['GET', 'POST'])]
-    // public function new(Request $request, CartRepository $cartRepository): Response
-    // {
-    //     $cart = new Cart();
-    //     $form = $this->createForm(CartType::class, $cart);
-    //     $form->handleRequest($request);
+    #[Route('/super_admin', name: 'app_cart_super_admin', methods: ['GET'])]
+    public function super_admin_view(CartRepository $cartRepository): Response
+    {
+        $user = $this->getUser();
+        $carts = $cartRepository->getAllActiveCart();
+        return $this->render('cart/index_super_admin.html.twig', [
+            'carts' => $carts,
+        ]);
+    }
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $cartRepository->save($cart, true);
+    #[Route('/new', name: 'app_cart_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, CartRepository $cartRepository): Response
+    {
+        $cart = new Cart();
+        $form = $this->createForm(CartType::class, $cart);
+        $form->handleRequest($request);
 
-    //         return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-    //     }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $cartRepository->save($cart, true);
 
-    //     return $this->renderForm('cart/new.html.twig', [
-    //         'cart' => $cart,
-    //         'form' => $form,
-    //     ]);
-    // }
+            return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
+        }
 
+        return $this->render('cart/new.html.twig', [
+            'cart' => $cart,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Permet l'achat fictif du panier client.
+     */
     #[Route('/{id}', name: 'app_cart_show', methods: ['POST'])]
     public function show(Cart $cart, CartRepository $cartRepository, TranslatorInterface $translator): Response
     {
-        $cart->setStatus(true);
-        $cart->setPurchaseDate(new DateTime());
-        $cartRepository->save($cart, true);
-        $this->addFlash($translator->trans('flash.success'), $translator->trans('cart.flash.success.purchase'));
+        try {
+            $cart->setStatus(true);
+            $cart->setPurchaseDate(new DateTime());
+            $cartRepository->save($cart, true);
+            $this->addFlash($translator->trans('flash.success'), $translator->trans('cart.flash.success.purchase'));
+        } catch (Exception $e){
+            $this->addFlash($translator->trans('flash.warning'), $translator->trans('cart.flash.failure.purchase'));
+        }
         return $this->redirectToRoute('app_cart_index_user', [], Response::HTTP_SEE_OTHER);
     }
 

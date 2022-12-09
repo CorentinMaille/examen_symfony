@@ -37,8 +37,9 @@ security:
         - { path: ^/en|fr/product$, roles: ROLE_USER }
         - { path: ^/en|fr/product/new, roles: ROLE_ADMIN }
         - { path: ^/en|fr/product/[0-9]+/edit, roles: ROLE_ADMIN }
-        - { path: ^/en|fr/cart_user$, roles: ROLE_USER }
-        - { path: ^/en|fr/cart_admin$, roles: ROLE_ADMIN }
+        - { path: ^/en|fr/cart/$, roles: ROLE_USER }
+        - { path: ^/en|fr/cart/super_admin$, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/en|fr/user, roles: ROLE_SUPER_ADMIN }
 
 when@test:
     security:
