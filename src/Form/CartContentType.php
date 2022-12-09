@@ -18,6 +18,7 @@ class CartContentType extends AbstractType
                 'attr' => [
                     'class' => 'text-center',
                     'min' => 0,
+                    'value' => 1
                 ]
             ])
             ->add('product', HiddenType::class)

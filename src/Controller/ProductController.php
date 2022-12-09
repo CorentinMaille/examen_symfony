@@ -52,8 +52,13 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{id}', name: 'product_sheet', methods: ['GET', 'POST'])]
-    public function show(Product $product, ProductRepository $productRepository, CartContentRepository $cartContentRepository, CartRepository $cartRepository, Request $request): Response
-    {
+    public function show(
+        Product $product,
+        ProductRepository $productRepository,
+        CartContentRepository $cartContentRepository,
+        CartRepository $cartRepository,
+        Request $request
+    ): Response {
        $productEditForm = $this->createForm(ProductType::class, $product);
        $productEditForm->handleRequest($request);
        if ($productEditForm->isSubmitted() && $productEditForm->isValid() && $this->isGranted('ROLE_ADMIN')) {
@@ -61,8 +66,7 @@ class ProductController extends AbstractController
             $this->addFlash('success', 'The product has been edited');
        }
 
-       $cartContent = new CartContent();
-       $addToCartForm = $this->createForm(CartContentType::class, $cartContent);
+       $addToCartForm = $this->createForm(CartContentType::class);
        $addToCartForm->handleRequest($request);
         if ($addToCartForm->isSubmitted() && $addToCartForm->isValid() && $this->isGranted('ROLE_USER')) {
 
@@ -94,21 +98,15 @@ class ProductController extends AbstractController
 
             // remove product stock
             $product->setStock($product->getStock() - $cartContent->getQuantity());
-            $productRepository->save($product);
+            $productRepository->save($product, 1);
 
-            $addToCartForm = $this->createForm(CartContentType::class, $cartContent);
-            $addToCartForm->remove('quantity');
-            $addToCartForm->add('quantity', null, [
-                'attr' => [
-                    'class' => 'text-center',
-                    'value' => 0,
-                    'min' => 0
-                ]
-            ]);
+            // Refresh form
+            $addToCartForm = $this->createForm(CartContentType::class);
+
             $this->addFlash('success', 'The product has been added to your cart');
         }
 
-        return $this->render('product/show.html.twig', [
+        return $this->render('product/sheet.html.twig', [
             'product' => $product,
             'productEditForm' => $productEditForm->createView(),
             'addToCartForm' => $addToCartForm->createView(),
