@@ -28,15 +28,16 @@ class CartContentController extends AbstractController
         $form = $this->createForm(CartContentType::class, $cartContent);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $this->isGranted('ROLE_USER')) {
             $cartContentRepository->save($cartContent, true);
+            $this->addFlash('success', 'The product has been added to your cart');
 
             return $this->redirectToRoute('app_cart_content_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('cart_content/new.html.twig', [
+        return $this->render('cart_content/new.html.twig', [
             'cart_content' => $cartContent,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
