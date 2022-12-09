@@ -1,13 +1,27 @@
 # HOME CONTROLLER
 home_controller:
   flash_message:
-    image_issue: Une erreur s'est produite avec l'image du produit donné
+    image_issue: Une erreur s'est produite avec l'image du produit donnée
     created: Le produit a été créé
+
+  # PRODUCT CONTROLLER
+  product_controller:
+    flash_message:
+      image_issue: Une erreur s'est produite avec l'image du produit donnée
+      edited: Le produit a bien été édité
+      stock_below_quantity: La quantité demandée est supérieure au stock disponible pour ce produit
+      added: Le produit a bien été ajouté à votre panier
+      deleted: Le produit a été supprimé
 
 # CART CONTENT CONTROLLER
 cart_content_controller:
   flash_message:
     added: Le produit a bien été ajouté à votre panier
+
+# SUBTITLES
+subtitle:
+  product_sheet: Fiche produit
+  edition: Edition
 
 # NAVBAR
 title: E-Commerce
@@ -30,6 +44,7 @@ assert:
   positive: Le champ doit être supérieur à 0
   positive_or_null: Le champ doit être supérieur ou égal à 0
   range_message: Votre valeur doit être comprise entre {{ min }} et {{ max }}
+  image_format: Veuillez envoyer un format d'image correct
 
 #FLASH
 flash:
@@ -42,6 +57,7 @@ button:
   delete: Supprimer
   view: Voir
   edit: Modifier
+  save: Sauvegarder
 
 #CART
 cart:
@@ -50,6 +66,7 @@ cart:
   no_result: Vous n'avez pas encore de produit dans votre panier
   total_amont: "Montant total de votre panier : %0% €"
   button:
+    addTo: Ajouter au panier
     validate: Valider et Payer
   super_admin:
     subtitle: Paniers non validés actuellement en cours
@@ -59,6 +76,15 @@ cart:
     subtitle: Détails de la commande
     order_date: "Date de la commande N°%0% : %1%"
     no_result: Un problème est survenu
+
+#FORM
+label:
+  quantity: Quantité
+  price: Prix
+  stock: Stock
+  picture: Image
+  description: Description
+  name: Nom
 
 #TABLE
 table:
