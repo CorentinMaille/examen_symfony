@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{{ 'home.title'|trans }}{% endblock %}
 
 {% block body %}
     {% if is_granted('ROLE_ADMIN') %}
         <div class="border rounded py-3 px-4 mb-3 w-50 mx-auto">
-            <h3><u>Création de produit</u></h3>
+            <h3><u>{{ 'home.subtitle'|trans }}</u></h3>
             {{ form(createProductForm) }}
         </div>
     {% endif %}
 
     {% if products is not empty %}
-    <h3 class="mb-3"><u>Produits</u></h3>
+    <h3 class="mb-3"><u>{{ 'home.products'|trans }}</u></h3>
     <div class="d-flex flex-row flex-wrap justify-content-around">
         {% for product in products %}
             <div class="card col-3 mx-3 mb-4">
@@ -19,18 +19,20 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">
-                        Description : {{ product.description }}
+                    {{ 'home.description'|trans({ '%0%' :  product.description }) }}
                     </p>
                     <p>
-                        Price : {{ product.price }}
+                    {{ 'home.price'|trans({ '%0%' :  product.price }) }}
                     </p>
-                    <p>Stock : {{ product.stock }}</p>
-                    <a href="{{ path('app_product_show', {'id':product.id}) }}" class="btn btn-primary">Voir</a>
+                    <p>
+                    {{ 'home.stock'|trans({ '%0%' :  product.stock }) }}
+                    </p>
+                    <a href="{{ path('app_product_show', {'id':product.id}) }}" class="btn btn-primary">{{ 'button.view'|trans }}</a>
                 </div>
             </div>
         {% endfor %}
     </div>
     {% else %}
-        <h3>Il n'existe aucun produit</h3>
+        <h3>{{ 'home.no_result'|trans }}</h3>
     {% endif %}
 {% endblock %}
