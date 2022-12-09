@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+
+    {% set montant_total = 0 %}
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <b>Date de la commande N°{{ cart.id }} : {{ cart.purchasedate|date("m/d/Y") }}</b>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix Unitaire</th>
+                <th>Prix ligne</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ct in cart.cartContents %}
+                <tr>
+                    <td>{{ ct.id }}</td>
+                    <td>{{ ct.product.name }}</td>
+                    <td>{{ ct.quantity }}</td>
+                    <td>{{ ct.product.price }} €</td>
+                    <td>{{ ct.quantity * ct.product.price }} €</td>
+                </tr>
+                {% set montant_total = montant_total + (ct.quantity * ct.product.price) %}
+            {% else %}
+                <tr>
+                    <td colspan="5">Un problème est survenu</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if cart is not empty %}
+        <div class="card">
+            <div class="card-body">
+                Montant total de votre panier : {{ montant_total }} €
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
