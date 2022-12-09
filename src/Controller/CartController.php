@@ -62,7 +62,7 @@ class CartController extends AbstractController
      * Permet l'achat fictif du panier client.
      */
     #[Route('/{id}', name: 'app_cart_show', methods: ['POST'])]
-    public function show(Cart $cart, CartRepository $cartRepository, TranslatorInterface $translator): Response
+    public function purchaseCart(Cart $cart, CartRepository $cartRepository, TranslatorInterface $translator): Response
     {
         try {
             $cart->setStatus(true);
@@ -73,6 +73,15 @@ class CartController extends AbstractController
             $this->addFlash($translator->trans('flash.warning'), $translator->trans('cart.flash.failure.purchase'));
         }
         return $this->redirectToRoute('app_cart_index_user', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
+    public function show(Cart $cart, CartRepository $cartRepository, TranslatorInterface $translator): Response
+    {
+        $cart = $cartRepository->find(['id' => $cart->getId()]);
+        return $this->render('cart/one_cart_view.html.twig', [
+            'cart' => $cart,
+        ]);
     }
 
     #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
