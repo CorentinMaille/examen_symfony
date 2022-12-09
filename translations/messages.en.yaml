@@ -9,6 +9,7 @@ navbar:
   users_cart_active: SUPER ADMIN - Users active cart
   users: Users
   users_day_registered: registered user of the day
+  account: My account
 
 # ASSERT
 assert:
