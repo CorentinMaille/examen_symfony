@@ -55,37 +55,28 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function show(Product $product): Response
+    #[Route('/{id}', name: 'app_product_show', methods: ['GET', 'POST'])]
+    public function show(Product $product, ProductRepository $productRepository, Request $request): Response
     {
+       $productEditForm = $this->createForm(ProductType::class, $product);
+       $productEditForm->handleRequest($request);
+       if ($productEditForm->isSubmitted() && $productEditForm->isValid() && $this->isGranted('ROLE_ADMIN')) {
+            $productRepository->save($product, true);
+            $this->addFlash('success', 'The product has been edited');
+       }
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'productEditForm' => $productEditForm->createView(),
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
+    #[Route('delete/{id}', name: 'app_product_delete', methods: ['POST'])]
+    public function delete(Product $product, ProductRepository $productRepository): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $productRepository->save($product, true);
-
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('product/edit.html.twig', [
-            'product' => $product,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_product_delete', methods: ['POST'])]
-    public function delete(Request $request, Product $product, ProductRepository $productRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+        if ($this->isGranted('ROLE_ADMIN')) {
             $productRepository->remove($product, true);
+            $this->addFlash('success', 'The product has been deleted');
         }
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
