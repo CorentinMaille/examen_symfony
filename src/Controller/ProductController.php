@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
+use App\Entity\CartContent;
 use App\Entity\Product;
+use App\Form\CartContentType;
 use App\Form\ProductType;
+use App\Repository\CartContentRepository;
+use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -11,19 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('{_locale}/product')]
 class ProductController extends AbstractController
 {
-    #[Route('/', name: 'app_product_index', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
-    {
-        return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
-        ]);
-    }
-
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductRepository $productRepository, SluggerInterface $slugger): Response
     {
@@ -55,8 +51,8 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET', 'POST'])]
-    public function show(Product $product, ProductRepository $productRepository, Request $request): Response
+    #[Route('/{id}', name: 'product_sheet', methods: ['GET', 'POST'])]
+    public function show(Product $product, ProductRepository $productRepository, CartContentRepository $cartContentRepository, CartRepository $cartRepository, Request $request): Response
     {
        $productEditForm = $this->createForm(ProductType::class, $product);
        $productEditForm->handleRequest($request);
@@ -65,9 +61,57 @@ class ProductController extends AbstractController
             $this->addFlash('success', 'The product has been edited');
        }
 
+       $cartContent = new CartContent();
+       $addToCartForm = $this->createForm(CartContentType::class, $cartContent);
+       $addToCartForm->handleRequest($request);
+        if ($addToCartForm->isSubmitted() && $addToCartForm->isValid() && $this->isGranted('ROLE_USER')) {
+
+            // Check if a cart exists for this user
+            $cart = $cartRepository->findOneBy([
+                'user' => $this->getUser(),
+                'status' => false
+            ]);
+
+            // If not create a new one
+            if (is_null($cart)) {
+                $cart = new Cart();
+                $cart->setUser($this->getUser());
+                $cart->setStatus(false);
+                $cartRepository->save($cart);
+            }
+
+            // Add the product to the user's cart
+            $cartContent = $addToCartForm->getData();
+
+            if ($product->getStock() < $cartContent->getQuantity() || $cartContent->getQuantity() < 0) {
+                $this->addFlash('danger', 'Le stock est inférieur à la quantitée selectionnée');
+                return $this->redirectToRoute('product_sheet', ['id' => $product->getId()]);
+            }
+
+            $cartContent->setCart($cart);
+            $cartContent->setProduct($product);
+            $cartContentRepository->save($cartContent, true);
+
+            // remove product stock
+            $product->setStock($product->getStock() - $cartContent->getQuantity());
+            $productRepository->save($product);
+
+            $addToCartForm = $this->createForm(CartContentType::class, $cartContent);
+            $addToCartForm->remove('quantity');
+            $addToCartForm->add('quantity', null, [
+                'attr' => [
+                    'class' => 'text-center',
+                    'value' => 0,
+                    'min' => 0
+                ]
+            ]);
+            $this->addFlash('success', 'The product has been added to your cart');
+        }
+
         return $this->render('product/show.html.twig', [
             'product' => $product,
             'productEditForm' => $productEditForm->createView(),
+            'addToCartForm' => $addToCartForm->createView(),
         ]);
     }
 

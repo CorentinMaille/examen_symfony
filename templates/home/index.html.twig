@@ -27,7 +27,7 @@
                     <p>
                     {{ 'home.stock'|trans({ '%0%' :  product.stock }) }}
                     </p>
-                    <a href="{{ path('app_product_show', {'id':product.id}) }}" class="btn btn-primary">{{ 'button.view'|trans }}</a>
+                    <a href="{{ path('product_sheet', {'id':product.id}) }}" class="btn btn-primary">{{ 'button.view'|trans }}</a>
                 </div>
             </div>
         {% endfor %}
