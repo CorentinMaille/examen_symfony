@@ -3,33 +3,38 @@
 {% block title %}Product{% endblock %}
 
 {% block body %}
-    <h1>Product Sheet</h1>
-
-    <div class="card w-50 text-left mx-auto">
-        <img src="{{ asset('uploads/' ~ product.photo) }}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text">{{ product.description }}</p>
+    <h1>{{ 'subtitle.product_sheet'|trans }}</h1>
+    <hr>
+    <div class="row">
+        <div class="col-6">
+            <div class="card w-100 text-left mx-auto h-100">
+                <img src="{{ asset('uploads/' ~ product.photo) }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ 'label.price'|trans }} : {{ product.price }} $</li>
+                    <li class="list-group-item">{{ 'label.stock'|trans }} : {{ product.stock }}</li>
+                </ul>
+                <div class="card-body">
+                    {% if is_granted('ROLE_USER') %}
+                        {{ form(addToCartForm) }}
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Price : {{ product.price }} $</li>
-            <li class="list-group-item">Stock : {{ product.stock }}</li>
-        </ul>
-        <div class="card-body">
-            {% if is_granted('ROLE_USER') %}
-                {{ form(addToCartForm) }}
-            {% endif %}
-
-            {% if is_granted('ROLE_ADMIN') %}
-                <hr>
-                <div class="row">
-                    <a class="btn btn-outline-danger mt-4 mx-auto" style="width: 33%" href="{{ path('app_product_delete', {'id': product.id}) }}">delete</a>
-                </div>
-                <div class="text-center mt-5">
-                    <h3 class="mb-3"><u>Edit</u></h3>
-                    {{ form(productEditForm) }}
-                </div>
-            {% endif %}
+        <div class="col-6">
+            <div class="border rounded px-5 h-100">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="text-center">
+                        <h3 class="mb-3 mt-2">{{ 'subtitle.edition'|trans }}</h3>
+                        <hr>
+                        {{ form(productEditForm) }}
+                        <a class="btn btn-danger mt-3 mx-auto w-50" style="width: 33%" href="{{ path('app_product_delete', {'id': product.id}) }}">{{ 'button.delete'|trans }}</a>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

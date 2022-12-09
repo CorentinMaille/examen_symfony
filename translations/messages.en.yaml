@@ -4,10 +4,24 @@ home_controller:
     image_issue: An error occurred with the given product image
     created: The product has been created
 
+# PRODUCT CONTROLLER
+product_controller:
+  flash_message:
+    image_issue: An error occurred with the given product image
+    edited: The product has been edited
+    stock_below_quantity: The quantity requested is greater than the stock available for this product
+    added: The product has been added to your cart
+    deleted: The product has been deleted
+
 # CART CONTENT CONTROLLER
 cart_content_controller:
   flash_message:
     added: The product has been added to your cart
+
+# SUBTITLES
+subtitle:
+  product_sheet: Product sheet
+  edition: Edition
 
 # NAVBAR
 title: E-Commerce
@@ -30,6 +44,7 @@ assert:
   positive_message: The field must be greater than zero
   positive_or_null_message: The field must be greater than or equal to zero
   range_message: Your value must be between {{ min }} and {{ max }}
+  image_format: Please upload a valid picture
 
 #FLASH
 flash:
@@ -42,6 +57,7 @@ button:
   delete: Delete
   view: View
   edit: Edit
+  save: Save
 
 #CART
 cart:
@@ -50,6 +66,7 @@ cart:
   no_result: You don't have any product in your cart yet
   total_amont: "Total amount of your cart : : %0% €"
   button:
+    addTo: Add to cart
     validate: Validate and Pay
   super_admin:
     subtitle: Carts not validated currently in progress
@@ -71,6 +88,15 @@ table:
   description: Description
   stock: Stock
   picture: Picture
+
+#FORM
+label:
+  quantity: Quantity
+  price: Price
+  stock: Stock
+  picture: Picture
+  description: Description
+  name: Name
 
 #HOME
 home:
