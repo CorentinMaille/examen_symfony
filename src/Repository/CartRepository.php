@@ -39,6 +39,17 @@ class CartRepository extends ServiceEntityRepository
         }
     }
 
+    public function getActiveCart($userId){
+        $query = "SELECT cart.id as cart_id, cart_content.*, product.* FROM cart 
+        INNER JOIN cart_content ON cart.id = cart_content.cart_id 
+        INNER JOIN product ON cart_content.product_id = product.id
+        WHERE user_id = ? AND cart.status = false";
+        $conn = $this->getEntityManager()->getConnection();
+        $preparedQuery = $conn->prepare($query);
+        $results = $preparedQuery->executeQuery([$userId]);
+        return $results->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return Cart[] Returns an array of Cart objects
 //     */

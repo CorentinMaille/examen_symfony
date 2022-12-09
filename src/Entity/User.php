@@ -45,6 +45,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->carts = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getFirstname() . " " . $this->getLastname();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

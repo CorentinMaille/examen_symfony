@@ -14,7 +14,7 @@ class CartContent
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity:Product::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
