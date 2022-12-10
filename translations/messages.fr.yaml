@@ -26,6 +26,7 @@ title:
   account: Mon Compte
   order: Commande
   register: S'enregistrer
+  login: Connexion
 
 # SUBTITLES
 subtitle:
@@ -35,6 +36,7 @@ subtitle:
   edition: Edition
   order_history: Historique des commandes
   register: S'enregistrer
+  login: Veuillez vous connecter
 
 # NAVBAR
 navbar:
@@ -74,6 +76,7 @@ button:
   edit: Modifier
   save: Sauvegarder
   register: S'enregister
+  login: Se connecter
 
 #CART
 cart:
