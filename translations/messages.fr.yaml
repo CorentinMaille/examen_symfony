@@ -19,15 +19,21 @@ cart_content_controller:
   flash_message:
     added: Le produit a bien été ajouté à votre panier
 
+# TITLES
+title:
+  main: E-Commerce
+  registered_today: Dernières Inscriptions
+  account: My account
+
 # SUBTITLES
 subtitle:
   product_sheet: Fiche produit
+  registered_today: Utilisateurs inscrits aujourd'hui
+  account: Mon compte
   edition: Edition
   order_history: Historique des commandes
-  account: Mon compte
 
 # NAVBAR
-title: E-Commerce
 navbar:
   register: Inscription
   connection: Connexion
@@ -116,6 +122,13 @@ table:
   date: Date
   amount: Montant
   options: Options
+  user:
+    firstname: Prénom
+    lastname: Nom de famille
+    email: E-mail
+    password: Mot de passe
+    registration_date: Date d'inscription
+    roles: Roles
 
 #HOME
 home:

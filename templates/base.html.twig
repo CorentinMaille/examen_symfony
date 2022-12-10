@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{{ 'title'|trans }}{% endblock %}</title>
+        <title>{% block title %}{{ 'title.main'|trans }}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
         <script src="https://kit.fontawesome.com/4cdad7a7dc.js" crossorigin="anonymous"></script>
@@ -16,7 +16,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{{ path('app_home') }}">
-                {{ 'title'|trans }}
+                {{ 'title.main'|trans }}
             </a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
@@ -26,7 +26,7 @@
                             {{ 'navbar.users'|trans }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ path('app_user_index')}}">{{ 'navbar.users_day_registered'|trans }}</a>
+                                <a class="dropdown-item" href="{{ path('app_user_today_registered')}}">{{ 'navbar.users_day_registered'|trans }}</a>
                             </div>
                         </li>
                     {% endif %}
