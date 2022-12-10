@@ -15,7 +15,9 @@
     <div class="d-flex flex-row flex-wrap justify-content-around">
         {% for product in products %}
             <div class="card col-3 mx-3 mb-4">
-                <img src="{{ asset('uploads/' ~ product.photo) }}" class="card-img-top" alt="...">
+                {% if product.photo is not null %}
+                    <img src="{{ asset('uploads/' ~ product.photo) }}" class="card-img-top" alt="...">
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">
