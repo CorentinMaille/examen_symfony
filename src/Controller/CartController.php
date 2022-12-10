@@ -17,7 +17,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('{_locale}/cart')]
 class CartController extends AbstractController
 {
-    #[Route('/', name: 'app_cart_index_user', methods: ['GET'])]
+    /**
+     * Permet à l'utilisateur de visualiser son panier
+     * @param CartRepository $cartRepository
+     * @return Response
+     */
+    #[Route('/', name: 'app_cart', methods: ['GET'])]
     public function index(CartRepository $cartRepository): Response
     {
         $user = $this->getUser();
@@ -29,32 +34,17 @@ class CartController extends AbstractController
         ]);
     }
 
-    #[Route('/super_admin', name: 'app_cart_super_admin', methods: ['GET'])]
+    /**
+     * Permet à un compte Super Admin de visualiser l'ensemble des paniers non validés
+     * @param CartRepository $cartRepository
+     * @return Response
+     */
+    #[Route('/super_admin', name: 'app_cart_unvalidated', methods: ['GET'])]
     public function super_admin_view(CartRepository $cartRepository): Response
     {
-        $user = $this->getUser();
         $carts = $cartRepository->getAllActiveCart();
         return $this->render('cart/index_super_admin.html.twig', [
             'carts' => $carts,
-        ]);
-    }
-
-    #[Route('/new', name: 'app_cart_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CartRepository $cartRepository): Response
-    {
-        $cart = new Cart();
-        $form = $this->createForm(CartType::class, $cart);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cartRepository->save($cart, true);
-
-            return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('cart/new.html.twig', [
-            'cart' => $cart,
-            'form' => $form->createView(),
         ]);
     }
 
@@ -72,7 +62,7 @@ class CartController extends AbstractController
         } catch (Exception $e){
             $this->addFlash($translator->trans('flash.warning'), $translator->trans('cart.flash.failure.purchase'));
         }
-        return $this->redirectToRoute('app_cart_index_user', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_cart', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
@@ -109,6 +99,6 @@ class CartController extends AbstractController
             $cartRepository->remove($cart, true);
         }
 
-        return $this->redirectToRoute('app_cart_index_user', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_cart', [], Response::HTTP_SEE_OTHER);
     }
 }
