@@ -25,6 +25,7 @@ title:
   registered_today: Last Registrations
   account: My account
   order: Order
+  register: Register
 
 # SUBTITLES
 subtitle:
@@ -33,6 +34,7 @@ subtitle:
   account: My Account
   edition: Edition
   order_history: Orders history
+  register: Register
 
 # NAVBAR
 navbar:
@@ -55,6 +57,9 @@ assert:
   positive_or_null_message: The field must be greater than or equal to zero
   range_message: Your value must be between {{ min }} and {{ max }}
   image_format: Please upload a valid picture
+  password_length: Your password should be at least {{ limit }} characters
+  not_blank_password: Please enter a password
+  agree_terms: You should agree to our terms.
 
 #FLASH
 flash:
@@ -68,6 +73,7 @@ button:
   view: View
   edit: Edit
   save: Save
+  register: Register
 
 #CART
 cart:
@@ -130,6 +136,7 @@ label:
   picture: Picture
   description: Description
   name: Name
+  agree_terms: Agree terms
 
 #HOME
 home:
