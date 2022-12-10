@@ -6,8 +6,8 @@
     <h1>{{ 'subtitle.product_sheet'|trans }}</h1>
     <hr>
     <div class="row">
-        <div class="col-6">
-            <div class="card w-100 text-left mx-auto h-100">
+        <div class="{{ is_granted('ROLE_ADMIN') ? 'col-6' : 'col-12' }}">
+            <div class="card {{ is_granted('ROLE_ADMIN') ? 'w-100' : 'w-50' }} text-left mx-auto h-100">
                 <img src="{{ asset('uploads/' ~ product.photo) }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
@@ -24,6 +24,7 @@
                 </div>
             </div>
         </div>
+        {% if is_granted('ROLE_ADMIN') %}
         <div class="col-6">
             <div class="border rounded px-5 h-100">
                 {% if is_granted('ROLE_ADMIN') %}
@@ -32,10 +33,10 @@
                         <hr>
                         {{ form(productEditForm) }}
                         {{ include('product/_delete_form.html.twig') }}
-                        <!-- <a class="btn btn-danger mt-3 mx-auto w-50" style="width: 33%" href="{{ path('app_product_delete', {'id': product.id}) }}">{{ 'button.delete'|trans }}</a> -->
                     </div>
                 {% endif %}
             </div>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
