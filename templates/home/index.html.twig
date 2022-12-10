@@ -4,12 +4,12 @@
 
 {% block body %}
     {% if is_granted('ROLE_ADMIN') %}
-        <div class="border rounded py-3 px-4 mb-3 w-50 mx-auto">
+        <div class="border rounded py-3 px-4 mt-4 w-50 mx-auto">
             <h3><u>{{ 'home.subtitle'|trans }}</u></h3>
             {{ form(createProductForm) }}
         </div>
     {% endif %}
-
+    <hr class="mx-auto w-50 mt-5">
     {% if products is not empty %}
     <h3 class="mb-3"><u>{{ 'home.products'|trans }}</u></h3>
     <div class="d-flex flex-row flex-wrap justify-content-around">
