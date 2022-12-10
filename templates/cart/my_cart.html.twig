@@ -45,7 +45,7 @@
                 {{ 'cart.total_amont'|trans({ '%0%' : montant_total }) }}
             </div>
             <div class="card-footer">
-                <form method="POST" action="{{ path('app_cart_show', {'id': cart_id}) }}">
+                <form method="POST" action="{{ path('app_cart_validate', {'id': cart_id}) }}">
                     <button class="btn btn-success">{{ 'cart.button.validate'|trans }}</button>
                 </form>
             </div>

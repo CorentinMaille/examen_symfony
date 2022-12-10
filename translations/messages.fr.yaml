@@ -23,7 +23,8 @@ cart_content_controller:
 title:
   main: E-Commerce
   registered_today: Dernières Inscriptions
-  account: My account
+  account: Mon Compte
+  order: Commande
 
 # SUBTITLES
 subtitle:
@@ -81,7 +82,7 @@ cart:
     subtitle: Paniers non validés actuellement en cours
     cart_for: "Panier N°%0% de l'utilisateur : %1% %2%"
     no_result: Aucun utilisateur n'a de panier en cours
-  one_cart_view:
+  order:
     subtitle: Détails de la commande
     order_date: "Date de la commande N°%0% : %1%"
     no_result: Un problème est survenu
