@@ -26,6 +26,7 @@ title:
   account: My account
   order: Order
   register: Register
+  login: Log in
 
 # SUBTITLES
 subtitle:
@@ -35,6 +36,7 @@ subtitle:
   edition: Edition
   order_history: Orders history
   register: Register
+  login: Please sign in
 
 # NAVBAR
 navbar:
@@ -74,6 +76,7 @@ button:
   edit: Edit
   save: Save
   register: Register
+  login: Sign in
 
 #CART
 cart:
