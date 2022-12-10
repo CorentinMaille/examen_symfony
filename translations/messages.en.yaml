@@ -1,6 +1,11 @@
+# SECURITY
+security:
+  forbidden_action: You are not authorized to perform this action
+
 # HOME CONTROLLER
 home_controller:
   flash_message:
+    welcome: Welcome and thank you for creating an account on our site!
     image_issue: An error occurred with the given product image
     created: The product has been created
 
@@ -20,8 +25,10 @@ cart_content_controller:
     success:
       added: The product has been added to your cart
       purchase: Your order has been validated
+      deleted: The cart content has been deleted
     failure:
       purchase: A problem occurred during the purchase of your order
+      deleted: A problem occurred during the cart content deletion
 
 # TITLES
 title:
