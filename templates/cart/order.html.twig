@@ -30,12 +30,12 @@
                 <tr>
                     <td>{{ ct.id }}</td>
                     {% if ct.product != null %}
-                        {% set indisponible = true %}
                         <td>{{ ct.product.name }}</td>
                         <td>{{ ct.quantity }}</td>
                         <td>{{ ct.product.price }} €</td>
                         <td>{{ ct.quantity * ct.product.price }} €</td>
                     {% else %}
+                        {% set indisponible = true %}
                         <td>{{ 'cart.order.unavailable_name'|trans }}</td>
                         <td>{{ ct.quantity }}</td>
                         <td>{{ 'cart.order.unavailable_price'|trans }}</td>
