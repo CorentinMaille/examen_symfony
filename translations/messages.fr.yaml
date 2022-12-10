@@ -1,6 +1,11 @@
+# SECURITY
+security:
+  forbidden_action: You are not authorized to perform this action
+
 # HOME CONTROLLER
 home_controller:
   flash_message:
+    welcome: Bienvenue et merci d'avoir créé un compte sur notre site!
     image_issue: Une erreur s'est produite avec l'image du produit donnée
     created: Le produit a été créé
 
@@ -20,8 +25,10 @@ cart_content_controller:
     success:
       added: Le produit a bien été ajouté à votre panier
       purchase: Votre commande a bien été validée
+      deleted: Le contenu du panier a été supprimé
     failure:
       purchase: Un problème est survenu durant l'achat de votre commande
+      deleted: Un problème est survenu lors de la suppression du contenu du panier
 
 # TITLES
 title:

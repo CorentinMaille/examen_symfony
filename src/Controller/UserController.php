@@ -65,7 +65,7 @@ class UserController extends AbstractController
                 )
             );
             $userRepository->save($user, 1);
-            $this->addFlash('success', $translator->trans('account.flash_message.edited'));
+            $this->addFlash($translator->trans('flash.success'), $translator->trans('account.flash_message.edited'));
         }
 
         // Get user passed orders

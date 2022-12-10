@@ -23,10 +23,13 @@ class CartContentController extends AbstractController
      * @return Response
      */
     #[Route('/{id}', name: 'app_cart_remove_product', methods: ['POST'])]
-    public function delete(Request $request, CartContent $cartContent, CartContentRepository $cartContentRepository): Response
+    public function delete(Request $request, CartContent $cartContent, CartContentRepository $cartContentRepository, TranslatorInterface $translator): Response
     {
         if ($this->isCsrfTokenValid('delete'.$cartContent->getId(), $request->request->get('_token'))) {
             $cartContentRepository->remove($cartContent, true);
+            $this->addFlash($translator->trans('flash.success'), $translator->trans('cart_content_controller.flash_message.success.deleted'));
+        } else {
+            $this->addFlash($translator->trans('flash.warning'), $translator->trans('cart_content_controller.flash_message.failure.deleted'));
         }
 
         return $this->redirectToRoute('app_cart', [], Response::HTTP_SEE_OTHER);
