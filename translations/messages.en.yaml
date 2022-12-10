@@ -19,15 +19,21 @@ cart_content_controller:
   flash_message:
     added: The product has been added to your cart
 
+# TITLES
+title:
+  main: E-Commerce
+  registered_today: Last Registrations
+  account: My account
+
 # SUBTITLES
 subtitle:
   product_sheet: Product sheet
+  registered_today: Users registered today
+  account: My Account
   edition: Edition
   order_history: Orders history
-  account: My Account
 
 # NAVBAR
-title: E-Commerce
 navbar:
   register: Inscription
   connection: Connection
@@ -94,6 +100,13 @@ table:
   date: Date
   amount: Amount
   options: Options
+  user:
+    firstname: Firstname
+    lastname: Lastname
+    email: Email
+    password: Password
+    registration_date: Registration date
+    roles: Roles
 
 # ACCOUNT
 account:
