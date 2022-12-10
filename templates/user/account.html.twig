@@ -39,9 +39,13 @@
                     <tr>
                         <td>{{ order.id }}</td>
                         <td>{{ order.purchaseDate|date('d-m-Y') }}</td>
-                        <td>{{ order.totalPrice }} $</td>
+                        {% if order.totalPrice != -1 %}
+                            <td>{{ order.totalPrice }} $</td>
+                        {% else %}
+                            <td>{{ 'account.unreachable_product'|trans }}</td>
+                        {% endif %}
                         <td>
-                            <a class="btn btn-primary w-75" href="{{ path('app_cart_show', {'id':order.id}) }}">Voir</a>
+                            <a class="btn btn-primary w-75" href="{{ path('app_cart_show', {'id':order.id}) }}">{{ 'button.view'|trans }}</a>
                         </td>
                     </tr>
                     </tbody>

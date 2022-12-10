@@ -5,6 +5,7 @@
 {% block body %}
 
     {% set montant_total = 0 %}
+    {% set indisponible = false %}
 
     <h1>{{ 'cart.order.subtitle'|trans }}</h1>
 
@@ -28,12 +29,22 @@
             {% for ct in cart.cartContents %}
                 <tr>
                     <td>{{ ct.id }}</td>
-                    <td>{{ ct.product.name }}</td>
-                    <td>{{ ct.quantity }}</td>
-                    <td>{{ ct.product.price }} €</td>
-                    <td>{{ ct.quantity * ct.product.price }} €</td>
+                    {% if ct.product != null %}
+                        {% set indisponible = true %}
+                        <td>{{ ct.product.name }}</td>
+                        <td>{{ ct.quantity }}</td>
+                        <td>{{ ct.product.price }} €</td>
+                        <td>{{ ct.quantity * ct.product.price }} €</td>
+                    {% else %}
+                        <td>{{ 'cart.order.unavailable_name'|trans }}</td>
+                        <td>{{ ct.quantity }}</td>
+                        <td>{{ 'cart.order.unavailable_price'|trans }}</td>
+                        <td>{{ 'cart.order.unavailable_row_price'|trans }}</td>
+                    {% endif %}
                 </tr>
-                {% set montant_total = montant_total + (ct.quantity * ct.product.price) %}
+                {% if ct.product != null %}
+                    {% set montant_total = montant_total + (ct.quantity * ct.product.price) %}
+                {% endif %}
             {% else %}
                 <tr>
                     <td colspan="5">{{ 'cart.order.no_result'|trans }}</td>
@@ -45,7 +56,11 @@
     {% if cart is not empty %}
         <div class="card">
             <div class="card-body">
-                {{ 'cart.total_amont'|trans({ '%0%' : montant_total }) }}
+                {% if indisponible == false %}
+                    {{ 'cart.total_amont'|trans({ '%0%' : montant_total }) }}
+                {% else %}
+                    {{ 'cart.total_amont'|trans({ '%0%' : 'cart.order.unavailable'|trans }) }}
+                {% endif %}
             </div>
         </div>
     {% endif %}

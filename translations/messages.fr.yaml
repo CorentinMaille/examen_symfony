@@ -4,15 +4,15 @@ home_controller:
     image_issue: Une erreur s'est produite avec l'image du produit donnée
     created: Le produit a été créé
 
-  # PRODUCT CONTROLLER
-  product_controller:
-    flash_message:
-      image_issue: Une erreur s'est produite avec l'image du produit donnée
-      edited: Le produit a bien été édité
-      stock_below_quantity: La quantité demandée est supérieure au stock disponible pour ce produit
-      added: Le produit a bien été ajouté à votre panier
-      deleted: Le produit a été supprimé
-    confirm_deletion: 'Êtes-vous sûr de vouloir supprimer ce produit ?'
+# PRODUCT CONTROLLER
+product_controller:
+  flash_message:
+    image_issue: Une erreur s'est produite avec l'image du produit donnée
+    edited: Le produit a bien été édité
+    stock_below_quantity: La quantité demandée est supérieure au stock disponible pour ce produit
+    added: Le produit a bien été ajouté à votre panier
+    deleted: Le produit a été supprimé
+  confirm_deletion: 'Êtes-vous sûr de vouloir supprimer ce produit ?'
 
 # CART CONTENT CONTROLLER
 cart_content_controller:
@@ -99,10 +99,15 @@ cart:
     subtitle: Détails de la commande
     order_date: "Date de la commande N°%0% : %1%"
     no_result: Un problème est survenu
+    unavailable : Indisponible
+    unavailable_name : Nom indisponible
+    unavailable_price : Prix indisponible
+    unavailable_row_price : Prix de la ligne indisponible
 
 # ACCOUNT
 account:
   no_order_place: Vous n'avez passé aucune commande
+  unreachable_product: Un produit de la commande est retiré de la vente
   flash_message:
     edited: 'Votre compte à bien été édité'
 

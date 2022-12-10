@@ -15,7 +15,7 @@ class CartContent
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity:Product::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?Product $product = null;
 
     #[ORM\ManyToOne(inversedBy: 'cartContents')]

@@ -87,7 +87,7 @@ cart:
   title: Cart
   subtitle: "%0%'s Cart"
   no_result: You don't have any product in your cart yet
-  total_amont: "Total amount of your cart : : %0% €"
+  total_amont: "Total amount of your cart : %0% €"
   button:
     addTo: Add to cart
     validate: Validate and Pay
@@ -99,6 +99,10 @@ cart:
     subtitle: Details of the order
     order_date: "Date of the order N°%0% : %1%"
     no_result: A problem has occurred
+    unavailable : Unavailable
+    unavailable_name : Unavailable name
+    unavailable_price : Unavailable price
+    unavailable_row_price : Unavailable row price
 
 #TABLE
 table:
@@ -125,6 +129,7 @@ table:
 # ACCOUNT
 account:
   no_order_place: You have not placed any orders
+  unreachable_product: A product in the order is withdrawn from sale
   flash_message:
     edited: 'Your account has been edited'
 
