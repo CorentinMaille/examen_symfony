@@ -29,6 +29,8 @@ title:
   registered_today: Dernières Inscriptions
   account: Mon Compte
   order: Commande
+  register: S'enregistrer
+  login: Connexion
 
 # SUBTITLES
 subtitle:
@@ -37,6 +39,8 @@ subtitle:
   account: Mon compte
   edition: Edition
   order_history: Historique des commandes
+  register: S'enregistrer
+  login: Veuillez vous connecter
 
 # NAVBAR
 navbar:
@@ -59,6 +63,9 @@ assert:
   positive_or_null: Le champ doit être supérieur ou égal à 0
   range_message: Votre valeur doit être comprise entre {{ min }} et {{ max }}
   image_format: Veuillez envoyer un format d'image correct
+  password_length: Votre mot de passe doit comporter au moins {{ limite }} caractères.
+  not_blank_password: Veuillez entrer un mot de passe
+  agree_terms: Vous devez accepter nos conditions d'utilisations.
 
 #FLASH
 flash:
@@ -72,6 +79,8 @@ button:
   view: Voir
   edit: Modifier
   save: Sauvegarder
+  register: S'enregister
+  login: Se connecter
 
 #CART
 cart:
@@ -112,6 +121,7 @@ label:
   picture: Image
   description: Description
   name: Nom
+  agree_terms: Acceptez nos conditions d'utilisation
 
 #TABLE
 table:
