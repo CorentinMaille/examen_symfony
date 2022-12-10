@@ -51,10 +51,6 @@ class UserController extends AbstractController
         TranslatorInterface $translator
     ): Response {
         $user = $this->getUser();
-        if (is_null($user)) {
-            return $this->redirectToRoute('app_login');
-        }
-
         // The password update is not mandatory
         $editAccountForm = $this->createForm(UserType::class, $user)
             ->remove('password')
@@ -64,34 +60,21 @@ class UserController extends AbstractController
 
         // The user edit his profile
         if ($editAccountForm->isSubmitted() && $editAccountForm->isValid()) {
-            if (!empty($editAccountForm->get('plainPassword'))) {
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $editAccountForm->get('plainPassword')->getData()
-                    )
-                );
+            $newPassword = $editAccountForm->get('plainPassword')?->getData() ?? null;
+            if ($newPassword) {
+                $user->setPassword($userPasswordHasher->hashPassword($user, $newPassword));
             }
             $userRepository->save($user, 1);
             $this->addFlash($translator->trans('flash.success'), $translator->trans('account.flash_message.edited'));
         }
 
-        // Get user passed orders
+        // Retrieves orders placed by the user
         $orders = $cartRepository->findBy([
             'user' => $user,
             'status' => true
         ]);
-        // compute orders total price
-        foreach ($orders as $order) {
-            $totalPrice = 0;
-            $unreachableProduct = false;
-            foreach ($order->getCartContents() as $orderLine) {
-                if($orderLine->getProduct() == null)
-                    $unreachableProduct = true;
-                $totalPrice += $orderLine->getQuantity() * ($orderLine->getProduct() != null ? $orderLine->getProduct()->getPrice() : null);
-            }
-            $order->totalPrice = $unreachableProduct ? -1 : $totalPrice;
-        }
+        // Compute orders total price
+        $orders = OrderUtils::computeTotalPriceMany($orders);
 
         return $this->render('user/account.html.twig', [
             'user' => $this->getUser(),
