@@ -16,6 +16,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
+    /**
+     * Affiche le formulaire d'inscription utilisateur
+     * Permet d'exécuter l'inscription
+     * Connecte l'utilisateur & Redirige à la page d'accueil après inscription
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param UserAuthenticatorInterface $userAuthenticator
+     * @param AuthAuthenticator $authenticator
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route('{_locale}/register', name: 'app_register')]
     public function register(
         Request $request,
