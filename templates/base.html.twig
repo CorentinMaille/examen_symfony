@@ -37,9 +37,9 @@
                             {{ 'navbar.cart'|trans }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ path('app_cart_index_user')}}">{{ 'navbar.view_cart'|trans }}</a>
+                                <a class="dropdown-item" href="{{ path('app_cart')}}">{{ 'navbar.view_cart'|trans }}</a>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                    <a class="dropdown-item" href="{{ path('app_cart_super_admin')}}">{{ 'navbar.users_cart_active'|trans }}</a>
+                                    <a class="dropdown-item" href="{{ path('app_cart_unvalidated')}}">{{ 'navbar.users_cart_active'|trans }}</a>
                                 {% endif %}
                             </div>
                         </li>
