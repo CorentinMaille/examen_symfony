@@ -27,7 +27,7 @@ class CartController extends AbstractController
     {
         $user = $this->getUser();
         $carts = $cartRepository->getCurrentUserActiveCart($user->getId());
-        return $this->render('cart/index_user.html.twig', [
+        return $this->render('cart/my_cart.html.twig', [
             'carts' => $carts,
             'user_full_name' => $user,
             'cart_id' => !empty($carts) ? $carts[0]['cart_id'] : null,
@@ -51,7 +51,7 @@ class CartController extends AbstractController
     /**
      * Permet l'achat fictif du panier client.
      */
-    #[Route('/{id}', name: 'app_cart_show', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_cart_validate', methods: ['POST'])]
     public function purchaseCart(Cart $cart, CartRepository $cartRepository, TranslatorInterface $translator): Response
     {
         try {
@@ -59,46 +59,25 @@ class CartController extends AbstractController
             $cart->setPurchaseDate(new DateTime());
             $cartRepository->save($cart, true);
             $this->addFlash($translator->trans('flash.success'), $translator->trans('cart.flash.success.purchase'));
-        } catch (Exception $e){
+        } catch (Exception $e) {
             $this->addFlash($translator->trans('flash.warning'), $translator->trans('cart.flash.failure.purchase'));
         }
         return $this->redirectToRoute('app_cart', [], Response::HTTP_SEE_OTHER);
     }
 
+    /**
+     * Permet de visualiser les détails d'une commande en particulier
+     * @param Cart $cart
+     * @param CartRepository $cartRepository
+     * @param TranslatorInterface $translator
+     * @return Response
+     */
     #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
     public function show(Cart $cart, CartRepository $cartRepository, TranslatorInterface $translator): Response
     {
         $cart = $cartRepository->find(['id' => $cart->getId()]);
-        return $this->render('cart/one_cart_view.html.twig', [
+        return $this->render('cart/order.html.twig', [
             'cart' => $cart,
         ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_cart_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Cart $cart, CartRepository $cartRepository): Response
-    {
-        $form = $this->createForm(CartType::class, $cart);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $cartRepository->save($cart, true);
-
-            return $this->redirectToRoute('app_cart_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('cart/edit.html.twig', [
-            'cart' => $cart,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_cart_delete', methods: ['POST'])]
-    public function delete(Request $request, Cart $cart, CartRepository $cartRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$cart->getId(), $request->request->get('_token'))) {
-            $cartRepository->remove($cart, true);
-        }
-
-        return $this->redirectToRoute('app_cart', [], Response::HTTP_SEE_OTHER);
     }
 }

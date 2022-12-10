@@ -24,6 +24,7 @@ title:
   main: E-Commerce
   registered_today: Last Registrations
   account: My account
+  order: Order
 
 # SUBTITLES
 subtitle:
@@ -81,7 +82,7 @@ cart:
     subtitle: Carts not validated currently in progress
     cart_for: "User's cart N°%0% : %1% %2%"
     no_result: No user has a current cart
-  one_cart_view:
+  order:
     subtitle: Details of the order
     order_date: "Date of the order N°%0% : %1%"
     no_result: A problem has occurred
