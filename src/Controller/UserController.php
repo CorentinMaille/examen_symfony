@@ -64,7 +64,7 @@ class UserController extends AbstractController
                     $editAccountForm->get('password')->getData()
                 )
             );
-            $userRepository->save($user);
+            $userRepository->save($user, 1);
             $this->addFlash('success', $translator->trans('account.flash_message.edited'));
         }
 
