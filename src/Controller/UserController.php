@@ -73,14 +73,16 @@ class UserController extends AbstractController
             'user' => $user,
             'status' => true
         ]);
-
         // compute orders total price
         foreach ($orders as $order) {
             $totalPrice = 0;
+            $unreachableProduct = false;
             foreach ($order->getCartContents() as $orderLine) {
-                $totalPrice += $orderLine->getQuantity() * $orderLine->getProduct()->getPrice();
+                if($orderLine->getProduct() == null)
+                    $unreachableProduct = true;
+                $totalPrice += $orderLine->getQuantity() * ($orderLine->getProduct() != null ? $orderLine->getProduct()->getPrice() : null);
             }
-            $order->totalPrice = $totalPrice;
+            $order->totalPrice = $unreachableProduct ? -1 : $totalPrice;
         }
 
         return $this->render('user/account.html.twig', [

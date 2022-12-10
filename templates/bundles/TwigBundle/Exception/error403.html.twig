@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="alert alert-danger">403</div>
+    <a class="btn btn-info" href="{{ path('app_home') }}">{{ 'title.main'|trans }}</a>
+    <img src="{{ asset('uploads/accessdenied.webp') }}" class="rounded mx-auto d-block" style="width:50vw; height:50vh;">
+{% endblock %}
