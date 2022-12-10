@@ -8,6 +8,7 @@ use App\Repository\CartRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -54,16 +55,23 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $editAccountForm = $this->createForm(UserType::class, $user);
+        // The password update is not mandatory
+        $editAccountForm = $this->createForm(UserType::class, $user)
+            ->remove('password')
+            ->add('plainPassword', PasswordType::class, ['required' => false]);
+
         $editAccountForm->handleRequest($request);
+
         // The user edit his profile
         if ($editAccountForm->isSubmitted() && $editAccountForm->isValid()) {
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $editAccountForm->get('password')->getData()
-                )
-            );
+            if (!empty($editAccountForm->get('plainPassword'))) {
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $editAccountForm->get('plainPassword')->getData()
+                    )
+                );
+            }
             $userRepository->save($user, 1);
             $this->addFlash($translator->trans('flash.success'), $translator->trans('account.flash_message.edited'));
         }
