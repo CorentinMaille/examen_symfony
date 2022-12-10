@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{{ 'title'|trans }}{% endblock %}</title>
+        <title>{% block title %}{{ 'title.main'|trans }}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
         <script src="https://kit.fontawesome.com/4cdad7a7dc.js" crossorigin="anonymous"></script>
@@ -16,7 +16,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{{ path('app_home') }}">
-                {{ 'title'|trans }}
+                {{ 'title.main'|trans }}
             </a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
@@ -26,21 +26,20 @@
                             {{ 'navbar.users'|trans }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ path('app_user_index')}}">{{ 'navbar.users_day_registered'|trans }}</a>
+                                <a class="dropdown-item" href="{{ path('app_user_today_registered')}}">{{ 'navbar.users_day_registered'|trans }}</a>
                             </div>
                         </li>
                     {% endif %}
 
                     {% if is_granted('ROLE_USER') %}
-
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ 'navbar.cart'|trans }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ path('app_cart_index_user')}}">{{ 'navbar.view_cart'|trans }}</a>
+                                <a class="dropdown-item" href="{{ path('app_cart')}}">{{ 'navbar.view_cart'|trans }}</a>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                    <a class="dropdown-item" href="{{ path('app_cart_super_admin')}}">{{ 'navbar.users_cart_active'|trans }}</a>
+                                    <a class="dropdown-item" href="{{ path('app_cart_unvalidated')}}">{{ 'navbar.users_cart_active'|trans }}</a>
                                 {% endif %}
                             </div>
                         </li>
@@ -63,22 +62,25 @@
             
         </nav>
 
-        {% for type, messages in app.flashes %}
-            {% for msg in messages %}
-            <div class="alert alert-{{ type }} w-50 mx-auto">
-                {{ msg }}
-            </div>
+        <div class="position-relative border">
+            {% for type, messages in app.flashes %}
+                {% for msg in messages %}
+                <div class="alert alert-{{ type }} alert-dismissible fade show position-absolute w-50 top-50 start-50 translate-middle" role="alert">
+                    <strong>{{ msg }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
+        </div>
 
         <main class="container text-center" style="border: red solid 2px">
             {% block body %}{% endblock %}
         </main>
 
         {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+            <script defer src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
             {{ encore_entry_script_tags('app') }}
             <script>
                 document.getElementById('fr').addEventListener('click', () => {

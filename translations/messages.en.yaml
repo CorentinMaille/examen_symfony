@@ -4,6 +4,16 @@ home_controller:
     image_issue: An error occurred with the given product image
     created: The product has been created
 
+# PRODUCT CONTROLLER
+product_controller:
+  flash_message:
+    image_issue: An error occurred with the given product image
+    edited: The product has been edited
+    stock_below_quantity: The quantity requested is greater than the stock available for this product
+    added: The product has been added to your cart
+    deleted: The product has been deleted
+  confirm_deletion: 'Are you sure you want to delete this product?'
+
 # CART CONTENT CONTROLLER
 cart_content_controller:
   flash_message:
@@ -13,8 +23,22 @@ cart_content_controller:
     failure:
       purchase: A problem occurred during the purchase of your order
 
+# TITLES
+title:
+  main: E-Commerce
+  registered_today: Last Registrations
+  account: My account
+  order: Order
+
+# SUBTITLES
+subtitle:
+  product_sheet: Product sheet
+  registered_today: Users registered today
+  account: My Account
+  edition: Edition
+  order_history: Orders history
+
 # NAVBAR
-title: E-Commerce
 navbar:
   register: Inscription
   connection: Connection
@@ -34,6 +58,7 @@ assert:
   positive_message: The field must be greater than zero
   positive_or_null_message: The field must be greater than or equal to zero
   range_message: Your value must be between {{ min }} and {{ max }}
+  image_format: Please upload a valid picture
 
 #FLASH
 flash:
@@ -46,6 +71,7 @@ button:
   delete: Delete
   view: View
   edit: Edit
+  save: Save
 
 #CART
 cart:
@@ -54,12 +80,13 @@ cart:
   no_result: You don't have any product in your cart yet
   total_amont: "Total amount of your cart : : %0% €"
   button:
+    addTo: Add to cart
     validate: Validate and Pay
   super_admin:
     subtitle: Carts not validated currently in progress
     cart_for: "User's cart N°%0% : %1% %2%"
     no_result: No user has a current cart
-  one_cart_view:
+  order:
     subtitle: Details of the order
     order_date: "Date of the order N°%0% : %1%"
     no_result: A problem has occurred
@@ -75,6 +102,38 @@ table:
   description: Description
   stock: Stock
   picture: Picture
+  date: Date
+  amount: Amount
+  options: Options
+  user:
+    firstname: Firstname
+    lastname: Lastname
+    email: Email
+    password: Password
+    registration_date: Registration date
+    roles: Roles
+
+# ACCOUNT
+account:
+  no_order_place: You have not placed any orders
+  flash_message:
+    edited: 'Your account has been edited'
+
+# USER
+user:
+  firstname: Firstname
+  lastname: Lastname
+  email: Email
+  password: Password
+
+#FORM
+label:
+  quantity: Quantity
+  price: Price
+  stock: Stock
+  picture: Picture
+  description: Description
+  name: Name
 
 #HOME
 home:

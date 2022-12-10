@@ -18,10 +18,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserController extends AbstractController
 {
 
-    #[Route('/list', name: 'app_user_index', methods: ['GET'])]
+    /**
+     * Affiche la vue contenant la liste des utilisateurs qui se sont inscrits aujourd'hui,
+     * par ordre d'inscription la plus récente à la plus ancienne
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    #[Route('/list', name: 'app_user_today_registered', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/registered_today.html.twig', [
             'users' => $userRepository->getRegisterUsersOnThisDay(),
         ]);
     }
@@ -29,12 +35,20 @@ class UserController extends AbstractController
     /**
      * Affiche la vue d'édition du profil de l'utilisateur connecté
      * @param UserRepository $userRepository
+     * @param CartRepository $cartRepository
      * @param Request $request
      * @param UserPasswordHasherInterface $userPasswordHasher
+     * @param TranslatorInterface $translator
      * @return Response
      */
     #[Route('/', name: 'app_user_account', methods: ['GET', 'POST'])]
-    public function account(UserRepository $userRepository, CartRepository $cartRepository, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response {
+    public function account(
+        UserRepository $userRepository,
+        CartRepository $cartRepository,
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        TranslatorInterface $translator
+    ): Response {
         $user = $this->getUser();
         if (is_null($user)) {
             return $this->redirectToRoute('app_login');
@@ -51,7 +65,7 @@ class UserController extends AbstractController
                 )
             );
             $userRepository->save($user);
-            $this->addFlash('success', 'Your account has been edited');
+            $this->addFlash('success', $translator->trans('account.flash_message.edited'));
         }
 
         // Get user passed orders
@@ -73,32 +87,6 @@ class UserController extends AbstractController
             'user' => $this->getUser(),
             'editAccountForm' => $editAccountForm->createView(),
             'orders' => $orders,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user): Response
-    {
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
-    {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->save($user, true);
-
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
         ]);
     }
 }

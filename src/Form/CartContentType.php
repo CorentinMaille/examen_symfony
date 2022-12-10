@@ -15,17 +15,19 @@ class CartContentType extends AbstractType
     {
         $builder
             ->add('quantity', null, [
+                'label' => 'label.quantity',
                 'attr' => [
-                    'class' => 'text-center',
+                    'class' => 'text-center w-25 mx-auto',
                     'min' => 0,
-                ]
+                    'value' => 1
+                ],
             ])
             ->add('product', HiddenType::class)
             ->add('submit', SubmitType::class, [
+                'label' => 'cart.button.addTo',
                 'attr' => [
                     'class' => 'text-center mt-3 btn btn-success w-25'
                 ],
-                'label' => 'add to cart'
             ])
         ;
     }

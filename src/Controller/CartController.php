@@ -18,14 +18,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CartController extends AbstractController
 {
     /**
-     * Permet à n'importe quel utilisateur de visualiser son panier en cours
+     * Permet à l'utilisateur de visualiser son panier
+     * @param CartRepository $cartRepository
+     * @return Response
      */
-    #[Route('/', name: 'app_cart_index_user', methods: ['GET'])]
+    #[Route('/', name: 'app_cart', methods: ['GET'])]
     public function index(CartRepository $cartRepository): Response
     {
         $user = $this->getUser();
         $carts = $cartRepository->getCurrentUserActiveCart($user->getId());
-        return $this->render('cart/index_user.html.twig', [
+        return $this->render('cart/my_cart.html.twig', [
             'carts' => $carts,
             'user_full_name' => $user,
             'cart_id' => !empty($carts) ? $carts[0]['cart_id'] : null,
@@ -33,12 +35,13 @@ class CartController extends AbstractController
     }
 
     /**
-     * Permet au super admin de pouvoir voir toutes les commandes non validées en cours sur le site
+     * Permet à un compte Super Admin de visualiser l'ensemble des paniers non validés
+     * @param CartRepository $cartRepository
+     * @return Response
      */
-    #[Route('/super_admin', name: 'app_cart_super_admin', methods: ['GET'])]
+    #[Route('/super_admin', name: 'app_cart_unvalidated', methods: ['GET'])]
     public function super_admin_view(CartRepository $cartRepository): Response
     {
-        $user = $this->getUser();
         $carts = $cartRepository->getAllActiveCart();
         return $this->render('cart/index_super_admin.html.twig', [
             'carts' => $carts,
@@ -48,7 +51,7 @@ class CartController extends AbstractController
     /**
      * Permet l'achat fictif du panier client.
      */
-    #[Route('/{id}', name: 'app_cart_purchase', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_cart_validate', methods: ['POST'])]
     public function purchaseCart(Cart $cart, CartRepository $cartRepository, TranslatorInterface $translator): Response
     {
         try {
@@ -59,31 +62,22 @@ class CartController extends AbstractController
         } catch (Exception $e){
             $this->addFlash($translator->trans('flash.warning'), $translator->trans('cart_content_controller.flash_message.failure.purchase'));
         }
-        return $this->redirectToRoute('app_cart_index_user', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_cart', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
-     * Permet de voir les détails d'une commande sur une page spécifique
+     * Permet de visualiser les détails d'une commande en particulier
+     * @param Cart $cart
+     * @param CartRepository $cartRepository
+     * @param TranslatorInterface $translator
+     * @return Response
      */
     #[Route('/{id}', name: 'app_cart_show', methods: ['GET'])]
     public function show(Cart $cart, CartRepository $cartRepository, TranslatorInterface $translator): Response
     {
         $cart = $cartRepository->find(['id' => $cart->getId()]);
-        return $this->render('cart/one_cart_view.html.twig', [
+        return $this->render('cart/order.html.twig', [
             'cart' => $cart,
         ]);
-    }
-
-    /**
-     * Permet de supprimer une commande
-     */
-    #[Route('/delete/{id}', name: 'app_cart_delete', methods: ['POST'])]
-    public function delete(Request $request, Cart $cart, CartRepository $cartRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$cart->getId(), $request->request->get('_token'))) {
-            $cartRepository->remove($cart, true);
-        }
-
-        return $this->redirectToRoute('app_cart_index_user', [], Response::HTTP_SEE_OTHER);
     }
 }

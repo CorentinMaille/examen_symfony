@@ -1,8 +1,18 @@
 # HOME CONTROLLER
 home_controller:
   flash_message:
-    image_issue: Une erreur s'est produite avec l'image du produit donné
+    image_issue: Une erreur s'est produite avec l'image du produit donnée
     created: Le produit a été créé
+
+  # PRODUCT CONTROLLER
+  product_controller:
+    flash_message:
+      image_issue: Une erreur s'est produite avec l'image du produit donnée
+      edited: Le produit a bien été édité
+      stock_below_quantity: La quantité demandée est supérieure au stock disponible pour ce produit
+      added: Le produit a bien été ajouté à votre panier
+      deleted: Le produit a été supprimé
+    confirm_deletion: 'Êtes-vous sûr de vouloir supprimer ce produit ?'
 
 # CART CONTENT CONTROLLER
 cart_content_controller:
@@ -13,8 +23,22 @@ cart_content_controller:
     failure:
       purchase: Un problème est survenu durant l'achat de votre commande
 
+# TITLES
+title:
+  main: E-Commerce
+  registered_today: Dernières Inscriptions
+  account: Mon Compte
+  order: Commande
+
+# SUBTITLES
+subtitle:
+  product_sheet: Fiche produit
+  registered_today: Utilisateurs inscrits aujourd'hui
+  account: Mon compte
+  edition: Edition
+  order_history: Historique des commandes
+
 # NAVBAR
-title: E-Commerce
 navbar:
   register: Inscription
   connection: Connexion
@@ -34,6 +58,7 @@ assert:
   positive: Le champ doit être supérieur à 0
   positive_or_null: Le champ doit être supérieur ou égal à 0
   range_message: Votre valeur doit être comprise entre {{ min }} et {{ max }}
+  image_format: Veuillez envoyer un format d'image correct
 
 #FLASH
 flash:
@@ -46,6 +71,7 @@ button:
   delete: Supprimer
   view: Voir
   edit: Modifier
+  save: Sauvegarder
 
 #CART
 cart:
@@ -54,15 +80,38 @@ cart:
   no_result: Vous n'avez pas encore de produit dans votre panier
   total_amont: "Montant total de votre panier : %0% €"
   button:
+    addTo: Ajouter au panier
     validate: Valider et Payer
   super_admin:
     subtitle: Paniers non validés actuellement en cours
     cart_for: "Panier N°%0% de l'utilisateur : %1% %2%"
     no_result: Aucun utilisateur n'a de panier en cours
-  one_cart_view:
+  order:
     subtitle: Détails de la commande
     order_date: "Date de la commande N°%0% : %1%"
     no_result: Un problème est survenu
+
+# ACCOUNT
+account:
+  no_order_place: Vous n'avez passé aucune commande
+  flash_message:
+    edited: 'Votre compte à bien été édité'
+
+# USER
+user:
+  firstname: Prénom
+  lastname: Nom de famille
+  email: E-mail
+  password: Mot de passe
+
+#FORM
+label:
+  quantity: Quantité
+  price: Prix
+  stock: Stock
+  picture: Image
+  description: Description
+  name: Nom
 
 #TABLE
 table:
@@ -75,6 +124,16 @@ table:
   description: Description
   stock: Stock
   picture: Photo
+  date: Date
+  amount: Montant
+  options: Options
+  user:
+    firstname: Prénom
+    lastname: Nom de famille
+    email: E-mail
+    password: Mot de passe
+    registration_date: Date d'inscription
+    roles: Roles
 
 #HOME
 home:

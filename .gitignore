@@ -19,4 +19,4 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 public/uploads/
-.idea/sonarlint/issuestore/index.pb
+.idea/

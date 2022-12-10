@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails de la commande{% endblock %}
+{% block title %}{{ 'title.order'|trans }}{% endblock %}
 
 {% block body %}
 
     {% set montant_total = 0 %}
 
-    <h1>{{ 'cart.one_cart_view.subtitle'|trans }}</h1>
+    <h1>{{ 'cart.order.subtitle'|trans }}</h1>
 
     <div class="card mt-3">
         <div class="card-body">
-            <b>{{ 'cart.one_cart_view.order_date'|trans({ '%0%' :  cart.id, '%1%' : cart.purchasedate|date("m/d/Y") }) }}</b>
+            <b>{{ 'cart.order.order_date'|trans({ '%0%' :  cart.id, '%1%' : cart.purchasedate|date("m/d/Y") }) }}</b>
         </div>
     </div>
 
@@ -36,7 +36,7 @@
                 {% set montant_total = montant_total + (ct.quantity * ct.product.price) %}
             {% else %}
                 <tr>
-                    <td colspan="5">{{ 'cart.one_cart_view.no_result'|trans }}</td>
+                    <td colspan="5">{{ 'cart.order.no_result'|trans }}</td>
                 </tr>
             {% endfor %}
         </tbody>
