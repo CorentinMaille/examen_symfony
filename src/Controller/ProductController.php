@@ -41,27 +41,27 @@ class ProductController extends AbstractController
         Request $request,
         TranslatorInterface $translator
     ): Response {
+
        $productEditForm = $this->createForm(ProductType::class, $product);
        $productEditForm->handleRequest($request);
+       // Edit Product
        if ($productEditForm->isSubmitted() && $productEditForm->isValid() && $this->isGranted('ROLE_ADMIN')) {
+            $photoFile = $productEditForm->get('photo')->getData();
+            if ($photoFile) {
+                $newFilename = uniqid().'.'.$photoFile->guessExtension();
+                try {
+                    $photoFile->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('warning', $translator->trans('form_type.product.photo.constraint'));
+                    return $this->redirectToRoute('app_home');
+                }
 
-        $photoFile = $productEditForm->get('photo')->getData();
-        if ($photoFile) {
-            $newFilename = uniqid().'.'.$photoFile->guessExtension();
-
-            try {
-                $photoFile->move(
-                    $this->getParameter('upload_directory'),
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                $this->addFlash('warning', $translator->trans('form_type.product.photo.constraint'));
-                return $this->redirectToRoute('app_home');
+                $product->afterDeletePhoto();
+                $product->setPhoto($newFilename);
             }
-
-            $product->afterDeletePhoto();
-            $product->setPhoto($newFilename);
-        }
 
             $productRepository->save($product, true);
             $this->addFlash('success', $translator->trans('product_controller.flash_message.edited'));
