@@ -10,6 +10,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * Affiche et éxecute le formulaire de connection
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
+     */
     #[Route(path: '{_locale}/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -21,6 +26,10 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
+    /**
+     * Déconnecte l'utilisateur connecté
+     * @return void
+     */
     #[Route(path: '{_locale}/logout', name: 'app_logout')]
     public function logout(): void
     {

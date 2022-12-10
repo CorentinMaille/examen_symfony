@@ -19,6 +19,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('{_locale}/product')]
 class ProductController extends AbstractController
 {
+    /**
+     * Affiche la vue de la fiche technique d'un produit
+     * Possibilité d'ajouter le produit au panier avec la quantité sélectionnée
+     * Si Admin, possibilité d'éditer le produit & de le supprimer
+     * Si ajout d'un produit au panier vérifie si un panier existe déjà pour l'utilisateur sinon en créé un
+     * @param Product $product
+     * @param ProductRepository $productRepository
+     * @param CartContentRepository $cartContentRepository
+     * @param CartRepository $cartRepository
+     * @param Request $request
+     * @param TranslatorInterface $translator
+     * @return Response
+     */
     #[Route('/{id}', name: 'app_product_sheet', methods: ['GET', 'POST'])]
     public function show(
         Product $product,
@@ -42,8 +55,8 @@ class ProductController extends AbstractController
                     $newFilename
                 );
             } catch (FileException $e) {
-                $this->addFlash('warning', 'Upload du logo échouée (avec grand succès)');
-                return $this->redirectToRoute('produits');
+                $this->addFlash('warning', $translator->trans('form_type.product.photo.constraint'));
+                return $this->redirectToRoute('app_home');
             }
 
             $product->afterDeletePhoto();
@@ -101,6 +114,13 @@ class ProductController extends AbstractController
         ]);
     }
 
+    /**
+     * Éxécute la suppression d'un produit
+     * @param Product $product Le produit à supprimer
+     * @param ProductRepository $productRepository
+     * @param TranslatorInterface $translator
+     * @return Response Redirection à la page d'accueil
+     */
     #[Route('delete/{id}', name: 'app_product_delete', methods: ['POST'])]
     public function delete(Product $product, ProductRepository $productRepository, TranslatorInterface $translator): Response
     {
