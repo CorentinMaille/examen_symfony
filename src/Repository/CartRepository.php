@@ -43,7 +43,7 @@ class CartRepository extends ServiceEntityRepository
      * Permet de récupérer le panier "en cours" de l'utilisateur connecté
      */
     public function getCurrentUserActiveCart($userId){
-        $query = "SELECT cart.id as cart_id, cart_content.*, product.* FROM cart 
+        $query = "SELECT cart.id as cart_id, cart_content.id as cart_content_id, cart_content.*, product.* FROM cart 
         INNER JOIN cart_content ON cart.id = cart_content.cart_id 
         INNER JOIN product ON cart_content.product_id = product.id
         WHERE user_id = ? AND cart.status = false";

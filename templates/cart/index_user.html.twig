@@ -21,7 +21,7 @@
         <tbody>
         {% for cart in carts %}
             <tr>
-                <td>{{ cart.id }}</td>
+                <td>{{ cart.cart_content_id }}</td>
                 <td>{{ cart.name }}</td>
                 <td>{{ cart.quantity }}</td>
                 <td>{{ cart.price }} €</td>
@@ -46,7 +46,7 @@
             </div>
             <div class="card-footer">
                 <form method="POST" action="{{ path('app_cart_show', {'id': cart_id}) }}">
-                    <button class="btn btn-success">{{ 'cart.button.validate'|trans }}</button>
+                    <button type="submit" class="btn btn-success">{{ 'cart.button.validate'|trans }}</button>
                 </form>
             </div>
         </div>

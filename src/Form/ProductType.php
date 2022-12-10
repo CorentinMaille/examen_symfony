@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Translation\TranslatableMessage;
 
 class ProductType extends AbstractType
 {
@@ -24,7 +25,7 @@ class ProductType extends AbstractType
                 ]
             ])
             ->add('photo', FileType::class, [
-                'label' => 'Photo',
+                'label' => new TranslatableMessage('table.picture'),
 
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
@@ -43,7 +44,7 @@ class ProductType extends AbstractType
                             'image/jpg',
                             'image/png',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid image',
+                        'mimeTypesMessage' => new TranslatableMessage('table.picture', [], 'messages'),
                     ])
                 ],
             ])

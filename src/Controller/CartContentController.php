@@ -14,6 +14,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('{_locale}/cart/content')]
 class CartContentController extends AbstractController
 {
+    /**
+     * Permet de supprimer une ligne d'un panier
+     */
     #[Route('/{id}', name: 'app_cart_content_delete', methods: ['POST'])]
     public function delete(Request $request, CartContent $cartContent, CartContentRepository $cartContentRepository): Response
     {
