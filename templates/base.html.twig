@@ -15,7 +15,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{{ path('app_home') }}">
+            <a class="navbar-brand ms-3" href="{{ path('app_home') }}">
                 {{ 'title.main'|trans }}
             </a>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -73,7 +73,7 @@
             {% endfor %}
         </div>
 
-        <main class="container text-center" style="border: red solid 2px">
+        <main class="container text-center">
             {% block body %}{% endblock %}
         </main>
 
