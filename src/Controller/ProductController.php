@@ -55,7 +55,7 @@ class ProductController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    $this->addFlash('warning', $translator->trans('form_type.product.photo.constraint'));
+                    $this->addFlash($translator->trans('flash.warning'), $translator->trans('form_type.product.photo.constraint'));
                     return $this->redirectToRoute('app_home');
                 }
 
@@ -64,7 +64,7 @@ class ProductController extends AbstractController
             }
 
             $productRepository->save($product, true);
-            $this->addFlash('success', $translator->trans('product_controller.flash_message.edited'));
+            $this->addFlash($translator->trans('flash.success'), $translator->trans('product_controller.flash_message.edited'));
        }
 
        $addToCartForm = $this->createForm(CartContentType::class);
@@ -89,7 +89,7 @@ class ProductController extends AbstractController
             $cartContent = $addToCartForm->getData();
 
             if ($product->getStock() < $cartContent->getQuantity() || $cartContent->getQuantity() < 0) {
-                $this->addFlash('danger', $translator->trans('product_controller.flash_message.stock_below_quantity'));
+                $this->addFlash($translator->trans('flash.danger'), $translator->trans('product_controller.flash_message.stock_below_quantity'));
                 return $this->redirectToRoute('app_product_sheet', ['id' => $product->getId()]);
             }
 
@@ -103,8 +103,7 @@ class ProductController extends AbstractController
 
             // Refresh form
             $addToCartForm = $this->createForm(CartContentType::class);
-
-            $this->addFlash('success', $translator->trans('product_controller.flash_message.added'));
+            $this->addFlash($translator->trans('flash.success'), $translator->trans('product_controller.flash_message.added'));
         }
 
         return $this->render('product/sheet.html.twig', [
@@ -126,7 +125,9 @@ class ProductController extends AbstractController
     {
         if ($this->isGranted('ROLE_ADMIN')) {
             $productRepository->remove($product, true);
-            $this->addFlash('success', $translator->trans('product_controller.flash_message.deleted'));
+            $this->addFlash($translator->trans('flash.success'), $translator->trans('product_controller.flash_message.deleted'));
+        } else {
+            $this->addFlash($translator->trans('flash.danger'), $translator->trans('security.forbidden_action'));
         }
 
         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
