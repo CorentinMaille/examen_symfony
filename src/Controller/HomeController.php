@@ -33,7 +33,7 @@ class HomeController extends AbstractController
 
         $createProductForm = $this->createForm(ProductType::class, $product);
         $createProductForm->handleRequest($request);
-
+        // Create a new product
         if ($createProductForm->isSubmitted() && $createProductForm->isValid() && $this->isGranted('ROLE_ADMIN')) {
             $productRepository->save($product, true);
             $imageFile = $createProductForm->get('photo')->getData();
