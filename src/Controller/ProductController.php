@@ -10,6 +10,7 @@ use App\Repository\CartContentRepository;
 use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,6 +31,25 @@ class ProductController extends AbstractController
        $productEditForm = $this->createForm(ProductType::class, $product);
        $productEditForm->handleRequest($request);
        if ($productEditForm->isSubmitted() && $productEditForm->isValid() && $this->isGranted('ROLE_ADMIN')) {
+
+        $photoFile = $productEditForm->get('photo')->getData();
+        if ($photoFile) {
+            $newFilename = uniqid().'.'.$photoFile->guessExtension();
+
+            try {
+                $photoFile->move(
+                    $this->getParameter('upload_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                $this->addFlash('warning', 'Upload du logo échouée (avec grand succès)');
+                return $this->redirectToRoute('produits');
+            }
+
+            $product->afterDeletePhoto();
+            $product->setPhoto($newFilename);
+        }
+
             $productRepository->save($product, true);
             $this->addFlash('success', $translator->trans('product_controller.flash_message.edited'));
        }

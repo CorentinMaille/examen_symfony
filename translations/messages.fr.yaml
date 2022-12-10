@@ -17,7 +17,11 @@ home_controller:
 # CART CONTENT CONTROLLER
 cart_content_controller:
   flash_message:
-    added: Le produit a bien été ajouté à votre panier
+    success:
+      added: Le produit a bien été ajouté à votre panier
+      purchase: Votre commande a bien été validée
+    failure:
+      purchase: Un problème est survenu durant l'achat de votre commande
 
 # TITLES
 title:
@@ -158,3 +162,9 @@ product:
   no_result: Pas de résultat
   button:
     create: Créer un nouveau produit
+
+#FORM TYPE
+form_type:
+  product:
+    photo:
+      constraint: Veuillez importer une image valide svp

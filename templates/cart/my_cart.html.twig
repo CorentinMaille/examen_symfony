@@ -21,7 +21,7 @@
         <tbody>
         {% for cart in carts %}
             <tr>
-                <td>{{ cart.id }}</td>
+                <td>{{ cart.cart_content_id }}</td>
                 <td>{{ cart.name }}</td>
                 <td>{{ cart.quantity }}</td>
                 <td>{{ cart.price }} €</td>
@@ -45,8 +45,8 @@
                 {{ 'cart.total_amont'|trans({ '%0%' : montant_total }) }}
             </div>
             <div class="card-footer">
-                <form method="POST" action="{{ path('app_cart_validate', {'id': cart_id}) }}">
-                    <button class="btn btn-success">{{ 'cart.button.validate'|trans }}</button>
+                <form method="POST" action="{{ path('app_cart_show', {'id': cart_id}) }}">
+                    <button type="submit" class="btn btn-success">{{ 'cart.button.validate'|trans }}</button>
                 </form>
             </div>
         </div>

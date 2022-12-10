@@ -58,9 +58,9 @@ class CartController extends AbstractController
             $cart->setStatus(true);
             $cart->setPurchaseDate(new DateTime());
             $cartRepository->save($cart, true);
-            $this->addFlash($translator->trans('flash.success'), $translator->trans('cart.flash.success.purchase'));
-        } catch (Exception $e) {
-            $this->addFlash($translator->trans('flash.warning'), $translator->trans('cart.flash.failure.purchase'));
+            $this->addFlash($translator->trans('flash.success'), $translator->trans('cart_content_controller.flash_message.success.purchase'));
+        } catch (Exception $e){
+            $this->addFlash($translator->trans('flash.warning'), $translator->trans('cart_content_controller.flash_message.failure.purchase'));
         }
         return $this->redirectToRoute('app_cart', [], Response::HTTP_SEE_OTHER);
     }

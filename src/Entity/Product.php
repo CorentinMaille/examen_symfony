@@ -112,4 +112,11 @@ class Product
 
         return $this;
     }
+
+    #[ORM\PostRemove]
+    public function afterDeletePhoto(){
+        if($this->photo != null){
+            unlink(__DIR__ . '/../../public/uploads/' . $this->photo);
+        }
+    }
 }

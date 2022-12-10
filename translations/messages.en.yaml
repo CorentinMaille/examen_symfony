@@ -17,7 +17,11 @@ product_controller:
 # CART CONTENT CONTROLLER
 cart_content_controller:
   flash_message:
-    added: The product has been added to your cart
+    success:
+      added: The product has been added to your cart
+      purchase: Your order has been validated
+    failure:
+      purchase: A problem occurred during the purchase of your order
 
 # TITLES
 title:
@@ -150,3 +154,9 @@ home:
   price: "Price : %0%"
   description: "Description : %0%"
   no_result: There are no products
+
+#FORM TYPE
+form_type:
+  product:
+    photo:
+      constraint: Please upload a valid image

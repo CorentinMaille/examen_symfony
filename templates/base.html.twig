@@ -22,7 +22,11 @@
                 <div class="navbar-nav">
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <li class="nav-item dropdown">
+<<<<<<< HEAD
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-bs-haspopup="true" aria-bs-expanded="false">
+=======
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+>>>>>>> main
                             {{ 'navbar.users'|trans }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -33,7 +37,7 @@
 
                     {% if is_granted('ROLE_USER') %}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-bs-haspopup="true" aria-bs-expanded="false">
                             {{ 'navbar.cart'|trans }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -43,12 +47,12 @@
                                 {% endif %}
                             </div>
                         </li>
+                        <li class="ml-auto"><a class="nav-item nav-link active" href="{{ path('app_user_account')}}">{{ 'navbar.account'|trans }}</a></li>
 
                     {% endif %}
 
                     {% if is_granted('ROLE_USER') %}
                         <li class="ml-auto"><a class="nav-item nav-link active" href="{{ path('app_logout')}}">{{ 'navbar.logout'|trans }}</a></li>
-                        <li class="ml-auto"><a class="nav-item nav-link active" href="{{ path('app_user_account')}}">{{ 'navbar.account'|trans }}</a></li>
                     {% else %}
                         <li><a class="nav-item nav-link active" href="{{ path('app_register')}}">{{ 'navbar.register'|trans }}</a></li>
                         <li><a class="nav-item nav-link active" href="{{ path('app_login')}}">{{ 'navbar.connection'|trans }}</a></li>
