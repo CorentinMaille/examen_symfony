@@ -26,7 +26,7 @@ class Cart
     private Collection $cartContents;
 
     #[ORM\ManyToOne(inversedBy: 'carts')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?User $user = null;
 
     private int|float $totalPrice;
