@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('{_locale}/user')]
@@ -54,7 +55,16 @@ class UserController extends AbstractController
         // The password update is not mandatory
         $editAccountForm = $this->createForm(UserType::class, $user)
             ->remove('password')
-            ->add('plainPassword', PasswordType::class, ['required' => false]);
+            ->add('plainPassword', PasswordType::class, [
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'min' => 6,
+                        // max length allowed by Symfony for security reasons
+                        'max' => 255,
+                    ])
+                ]
+            ]);
 
         $editAccountForm->handleRequest($request);
 

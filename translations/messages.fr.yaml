@@ -95,6 +95,7 @@ cart:
   subtitle: Panier de %0%
   no_result: Vous n'avez pas encore de produit dans votre panier
   total_amont: "Montant total de votre panier : %0% €"
+  confirm_deletion: Êtes-vous sur de vouloir supprimer la ligne du panier ?
   button:
     addTo: Ajouter au panier
     validate: Valider et Payer

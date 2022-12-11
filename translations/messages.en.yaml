@@ -95,6 +95,7 @@ cart:
   subtitle: "%0%'s Cart"
   no_result: You don't have any product in your cart yet
   total_amont: "Total amount of your cart : %0% €"
+  confirm_deletion: Are you sure you want to delete the shopping cart line ?
   button:
     addTo: Add to cart
     validate: Validate and Pay
